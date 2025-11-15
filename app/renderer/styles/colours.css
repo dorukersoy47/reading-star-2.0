@@ -1,0 +1,13 @@
+:root {
+  /* general colours */
+  --background: #FFF;
+  --text: #333;
+
+  /* button colours */
+  --button: #4A90E2;
+  --button-hover: #3B7EC6;
+  --button-text: #FFF;
+  --button-visible: #FFD966;
+
+  --back-hover: #E0E0E0;
+}

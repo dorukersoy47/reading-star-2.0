@@ -1,0 +1,61 @@
+@import './colours.css';
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito', sans-serif;
+}
+
+.button {
+  font-family: 'Nunito', sans-serif;
+  padding: .5em 1em;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--button-text);
+  background-color: var(--button);
+  border: none;
+  border-radius: .7em;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+  text-align: center;
+  line-height: 110%;
+}
+
+.button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-4px);
+}
+
+.button:active {
+  transform: translateY(0px);
+}
+
+.button:focus-visible {
+  outline: 4px solid var(--button-visible);
+  outline-offset: 3px;
+}
+
+#back {
+  font-size: 2em;
+  border-radius: 1em;
+  border: none;
+  background-color: transparent;
+  transition: background-color 0.1s ease;
+}
+
+#back:hover {
+  background-color: var(--back-hover);
+}
