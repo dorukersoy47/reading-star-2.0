@@ -1,0 +1,58 @@
+Nursery rhymes:
+- 100-140 BPM
+- rhythm:
+	- 2-4 stressed syllables per line -> 2-4 beats per line
+	- trochaic or iambic rhythm pattern
+	- AABB or ABAB rhyme scheme
+
+- melody:
+	- within an octave
+	- major keys
+	- stepwise motion (one or two note disparity between beats)
+	- finish with the tonic (home note)
+	- Follow a rise than fall pattern.
+
+- instruments: piano, acoustic guitar, ukulele, xylophone, tambourines, hand drums, recorder, fiddle
+
+
+Hip-hop music:
+**Hip-hop music:**
+- 85-95 BPM
+- rhythm:
+	- 4/4 time signature
+	- kick drum on beats 1 and 3
+	- snare on beats 2 and 4
+	- hi-hat sixteenth-note patterns with triplet fills
+- melody/harmony:
+	- minor keys
+	- 2-4 chord loops (i-bVII-bVI-V or i-iv-bVII-bIII)
+	- sampled melodic loops (4-8 bars)
+- instruments/sounds:
+	- 808 bass/sub-bass
+	- drum machine (TR-808 or TR-909 sounds)
+	- sampled piano, strings, or synth pads
+	- vocal samples/chops
+- structure:
+	- intro (4-8 bars) - verse (16 bars) - hook (8 bars) - verse (16 bars) - hook (8 bars) - bridge (8 bars) - hook (8 bars) - outro (4-8 bars)
+
+Rock music:
+
+- 120-140 BPM
+- Rhythm:
+	- 4/4 time signature
+	- Backbeat on beats 2 and 4 (snare)
+	- Eighth-note hi-hat patterns
+- Melody/Harmony:
+
+	- Minor keys preferred
+	- Power chords (root and fifth intervals)
+	- Pentatonic scale for melodies
+	- I-IV-V or I-bVII-IV chord progressions
+- Instruments:
+	- Electric guitar (distorted)
+	- Bass guitar
+	- Drum kit (kick, snare, hi-hat, crash cymbal)
+	- Vocals
+- Structure:
+	- Verse (16 bars) - Chorus (8 bars) - Verse (16 bars) - Chorus (8 bars) - Bridge (8 bars) - Chorus (8 bars)
+	- Guitar solo in bridge section
