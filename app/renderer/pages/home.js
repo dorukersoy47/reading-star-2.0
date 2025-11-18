@@ -1,6 +1,9 @@
 import { navigateTo } from "../router.js";
 
-export function Home() {
+export const header = false;
+export const title = "Home";
+
+export function Render() {
   const el = document.createElement("div");
   el.className = "home-page";
   

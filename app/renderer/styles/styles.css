@@ -10,6 +10,7 @@
 
 body {
   background-color: var(--background);
+  font-size: 2vh;
   color: var(--text);
   height: 100%;
   margin: 0;
@@ -58,4 +59,22 @@ body {
 
 #back:hover {
   background-color: var(--back-hover);
+}
+
+/* header css for  <div class="header-left">
+        <button id="back" class="header-button">←</button>
+    </div>
+    <div class="header-center">
+        <h1 id="title"></h1>
+    </div>
+    <div class="header-right">
+        <button id="help" class="header-button">❓</button>
+        <button id="settings" class="header-button">⚙️</button>
+    </div>
+  it displays left to right with each section properly adjusted*/
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 2em;
 }
