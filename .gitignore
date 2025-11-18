@@ -1,3 +1,8 @@
+# (Python) Virtual Environments
+venv/
+.venv/
+ibm-granite/venv/
+
 # Logs
 logs
 *.log
