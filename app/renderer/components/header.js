@@ -14,12 +14,13 @@ export function Header() {
     <div class="header-right">
         <button id="help" class="header-button">❓</button>
         <button id="settings" class="header-button">⚙️</button>
+        <button id="quit" class="header-button">✖️</button>
     </div>
   `;
 
-  el.querySelector("#back").onclick = () => navigateTo("home");
 //   el.querySelector("#help").onclick = () => navigateTo("help");
 //   el.querySelector("#settings").onclick = () => navigateTo("settings");
+  el.querySelector("#quit").onclick = () => window.close();
 
   return el;
 }

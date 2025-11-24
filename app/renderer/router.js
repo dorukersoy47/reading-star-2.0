@@ -9,13 +9,13 @@ const routes = {
   mySongs: MySongsPage
 };
 
-export function navigateTo(page) {
+export function navigateTo(page, back) {
   const header = document.getElementById("header");
   header.innerHTML = "";
   if (routes[page].header === true) {
     header.appendChild(Header());
     header.querySelector("#title").innerText = routes[page].title;
-    header.querySelector("#back").onclick = () => navigateTo(routes[page].back);
+    header.querySelector("#back").onclick = () => navigateTo(back);
   }
   const app = document.getElementById("app");
   app.innerHTML = "";
