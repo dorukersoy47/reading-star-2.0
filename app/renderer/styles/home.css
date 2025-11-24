@@ -8,9 +8,11 @@
 }
 
 .home-title {
-  font-size: 3rem;
+  color: var(--title);
+  font-size: 4rem;
   font-weight: 800;
   margin-top: 0;
+  margin-bottom: 1.5rem;
 }
 
 .home-buttons {
@@ -18,4 +20,12 @@
   display: grid;
   gap: 2em;
   grid-template-columns: 1fr 1fr;
+}
+
+.home-subtitle {
+  color: var(--subtitle);
+  font-style: italic;
+  font-size: 2rem;
+  margin-top: -2rem;
+  margin-bottom: 2rem;
 }

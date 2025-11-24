@@ -1,12 +1,15 @@
 :root {
   /* general colours */
-  --background: #FFF;
-  --text: #333;
+  /* pinky cream */
+  --background: #F8F8F8; 
+  --text: #4A3457;
+  --title: #685384;
+  --subtitle: #7c6895;
 
   /* button colours */
-  --button: #4A90E2;
-  --button-hover: #3B7EC6;
-  --button-text: #FFF;
+  --button: #8F78B0;
+  --button-hover: #A68DC4;
+  --button-text: #F8F8F8;
   --button-visible: #FFD966;
 
   --back-hover: #E0E0E0;

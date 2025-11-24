@@ -9,6 +9,7 @@
 }
 
 body {
+  user-select: none;
   background-color: var(--background);
   font-size: 2vh;
   color: var(--text);
@@ -61,20 +62,42 @@ body {
   background-color: var(--back-hover);
 }
 
-/* header css for  <div class="header-left">
-        <button id="back" class="header-button">←</button>
-    </div>
-    <div class="header-center">
-        <h1 id="title"></h1>
-    </div>
-    <div class="header-right">
-        <button id="help" class="header-button">❓</button>
-        <button id="settings" class="header-button">⚙️</button>
-    </div>
-  it displays left to right with each section properly adjusted*/
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  padding: 1em 2em;
+  padding: 0em 2em;
+}
+
+.header-left {
+  justify-self: start;
+}
+
+.header-center {
+  justify-self: center;
+  font-size: 1.2rem;
+  color: var(--title);
+}
+
+.header-right {
+  justify-self: end;
+}
+
+#background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  background: var(--color);
+  filter: blur(70px);
+  opacity: 0.55;
+  transition: transform 8s ease-in-out;
 }
