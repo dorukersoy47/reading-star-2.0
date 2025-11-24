@@ -15,6 +15,7 @@ export function navigateTo(page) {
   if (routes[page].header === true) {
     header.appendChild(Header());
     header.querySelector("#title").innerText = routes[page].title;
+    header.querySelector("#back").onclick = () => navigateTo(routes[page].back);
   }
   const app = document.getElementById("app");
   app.innerHTML = "";
