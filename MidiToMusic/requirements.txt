@@ -1,0 +1,5 @@
+pyfluidsynth
+pretty_midi
+soundfile
+sounddevice
+numpy
