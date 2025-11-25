@@ -1,0 +1,72 @@
+{
+  "tempo": 60,
+  "time_signature": "4/4",
+  "length_bars": 4,
+  "tracks": [
+    {
+      "name": "Synth Chord",
+      "channel": 1,
+      "notes": [
+        { "bar": 1, "beat": 1.0, "pitch": 60, "velocity": 30 },
+        { "bar": 1, "beat": 2.0, "pitch": 64, "velocity": 30 },
+        { "bar": 1, "beat": 3.0, "pitch": 67, "velocity": 30 },
+        { "bar": 1, "beat": 4.0, "pitch": 67, "velocity": 30 },
+        { "bar": 2, "beat": 1.0, "pitch": 48, "velocity": 30 },
+        { "bar": 2, "beat": 2.0, "pitch": 52, "velocity": 30 },
+        { "bar": 2, "beat": 3.0, "pitch": 55, "velocity": 30 },
+        { "bar": 2, "beat": 4.0, "pitch": 55, "velocity": 30 },
+        { "bar": 3, "beat": 1.0, "pitch": 60, "velocity": 30 },
+        { "bar": 3, "beat": 2.0, "pitch": 64, "velocity": 30 },
+        { "bar": 3, "beat": 3.0, "pitch": 67, "velocity": 30 },
+        { "bar": 3, "beat": 4.0, "pitch": 67, "velocity": 30 },
+        { "bar": 4, "beat": 1.0, "pitch": 72, "velocity": 30 },
+        { "bar": 4, "beat": 2.0, "pitch": 76, "velocity": 30 },
+        { "bar": 4, "beat": 3.0, "pitch": 79, "velocity": 30 },
+        { "bar": 4, "beat": 4.0, "pitch": 79, "velocity": 30 }
+        
+      ]
+    },
+    {
+      "name": "Drumkit",
+      "channel": 0,
+      "notes": [
+        { "bar": 1, "beat": 1.0, "pitch": 6, "velocity": 110 },
+        { "bar": 1, "beat": 2.0, "pitch": 6, "velocity": 110 },
+        { "bar": 1, "beat": 3.0, "pitch": 6, "velocity": 110 },
+        { "bar": 1, "beat": 4.0, "pitch": 6, "velocity": 110 },
+        { "bar": 1, "beat": 1.5, "pitch": 6, "velocity": 110 },
+        { "bar": 1, "beat": 2.5, "pitch": 6, "velocity": 110 },
+        { "bar": 1, "beat": 3.5, "pitch": 6, "velocity": 110 },
+        { "bar": 1, "beat": 4.5, "pitch": 6, "velocity": 110 },
+        
+        { "bar": 2, "beat": 1.0, "pitch": 6, "velocity": 110 },
+        { "bar": 2, "beat": 2.0, "pitch": 6, "velocity": 110 },
+        { "bar": 2, "beat": 3.0, "pitch": 6, "velocity": 110 },
+        { "bar": 2, "beat": 4.0, "pitch": 6, "velocity": 110 },
+        { "bar": 2, "beat": 1.5, "pitch": 6, "velocity": 110 },
+        { "bar": 2, "beat": 2.5, "pitch": 6, "velocity": 110 },
+        { "bar": 2, "beat": 3.5, "pitch": 6, "velocity": 110 },
+        { "bar": 2, "beat": 4.5, "pitch": 6, "velocity": 110 },
+
+        { "bar": 3, "beat": 1.0, "pitch": 6, "velocity": 110 },
+        { "bar": 3, "beat": 2.0, "pitch": 6, "velocity": 110 },
+        { "bar": 3, "beat": 3.0, "pitch": 6, "velocity": 110 },
+        { "bar": 3, "beat": 4.0, "pitch": 6, "velocity": 110 },
+        { "bar": 3, "beat": 1.5, "pitch": 6, "velocity": 110 },
+        { "bar": 3, "beat": 2.5, "pitch": 6, "velocity": 110 },
+        { "bar": 3, "beat": 3.5, "pitch": 6, "velocity": 110 },
+        { "bar": 3, "beat": 4.5, "pitch": 6, "velocity": 110 },
+
+        { "bar": 4, "beat": 1.0, "pitch": 6, "velocity": 110 },
+        { "bar": 4, "beat": 2.0, "pitch": 6, "velocity": 110 },
+        { "bar": 4, "beat": 3.0, "pitch": 6, "velocity": 110 },
+        { "bar": 4, "beat": 4.0, "pitch": 6, "velocity": 110 },
+        { "bar": 4, "beat": 1.5, "pitch": 6, "velocity": 110 },
+        { "bar": 4, "beat": 2.5, "pitch": 6, "velocity": 110 },
+        { "bar": 4, "beat": 3.5, "pitch": 6, "velocity": 110 },
+        { "bar": 4, "beat": 4.5, "pitch": 6, "velocity": 110 }
+        
+      ]
+    }
+  ]
+}
