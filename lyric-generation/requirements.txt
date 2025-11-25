@@ -3,3 +3,6 @@ torchvision
 torchaudio
 accelerate
 transformers
+pypen
+syllapy
+nltk
