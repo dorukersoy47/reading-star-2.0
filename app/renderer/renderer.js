@@ -1,7 +1,7 @@
 import { navigateTo } from "./router.js";
 
 window.onload = () => {
-  navigateTo("home");
+  navigateTo("home", null);
 };
 
 const func = async () => {

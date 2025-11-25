@@ -1,22 +1,22 @@
 const container = document.getElementById("background");
 
 const colors = [
-    "#f5c6f8ff",
+    "#cfc3fdff",
     "#c0e6ffff",
-    "#cdf9edff",
-    "#cfc3fdff"
+    "#f5c6f8ff",
+    "#cdf9edff"
 ];
 
 const NUM_BLOBS = 6;
 
-function createBlob() {
+function createBlob(i) {
   const blob = document.createElement("div");
   blob.classList.add("blob");
 
-  const size = 200 + Math.random() * 200;
+  const size = 10 + Math.random() * 10;
 
-  blob.style.setProperty("--size", size + "px");
-  blob.style.setProperty("--color", colors[Math.floor(Math.random() * colors.length)]);
+  blob.style.setProperty("--size", size + "rem");
+  blob.style.setProperty("--color", colors[i % colors.length]);
 
   container.appendChild(blob);
 
@@ -24,7 +24,6 @@ function createBlob() {
 }
 
 function randomPosition() {
-  // extra overflow so blobs drift outside edges nicely
   const extra = 200;
 
   return {
@@ -39,13 +38,12 @@ function moveBlob(blob) {
 }
 
 function init() {
-//  make the blobs move in the beginning
   const blobs = [];
 
   for (let i = 0; i < NUM_BLOBS; i++) {
-    const blob = createBlob();
+    const blob = createBlob(i);
     blobs.push(blob);
-    moveBlob(blob); // initial position
+    moveBlob(blob);
   }
 
   // move blobs every 8 seconds

@@ -9,15 +9,29 @@ const routes = {
   mySongs: MySongsPage
 };
 
-export function navigateTo(page, back) {
+const historyStack = [];
+let currentScreen = null;
+
+export function navigateTo(page, pushHistory = true) {
   const header = document.getElementById("header");
   header.innerHTML = "";
-  if (routes[page].header === true) {
-    header.appendChild(Header());
-    header.querySelector("#title").innerText = routes[page].title;
-    header.querySelector("#back").onclick = () => navigateTo(back);
+
+  if (pushHistory && currentScreen) {
+    historyStack.push(currentScreen);
   }
+
+  header.appendChild(Header(historyStack.length > 0, routes[page].title));
+
   const app = document.getElementById("app");
   app.innerHTML = "";
   app.appendChild(routes[page].Render());
+
+  currentScreen = page;
+}
+
+export function goBack() {
+  if (historyStack.length > 0) {
+    const previous = historyStack.pop();
+    navigateTo(previous, false);
+  }
 }

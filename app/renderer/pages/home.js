@@ -1,6 +1,6 @@
 import { navigateTo } from "../router.js";
 
-export const header = false;
+export const title = null;
 
 export function Render() {
   const el = document.createElement("div");
@@ -15,8 +15,8 @@ export function Render() {
     </div>
   `;
 
-  el.querySelector("#create").onclick = () => navigateTo("createSong", "home");
-  el.querySelector("#mysongs").onclick = () => navigateTo("mySongs", "home");
+  el.querySelector("#create").onclick = () => navigateTo("createSong");
+  el.querySelector("#mysongs").onclick = () => navigateTo("mySongs");
 
   return el;
 }
