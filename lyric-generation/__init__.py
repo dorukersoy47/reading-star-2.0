@@ -40,7 +40,8 @@ from syllable_counter import (
     count_syllables_in_word,
     count_syllables_in_line,
     count_syllables_per_line,
-    get_syllable_breakdown
+    get_syllable_breakdown,
+    split_word_into_syllables
 )
 
 from normalize_song import (

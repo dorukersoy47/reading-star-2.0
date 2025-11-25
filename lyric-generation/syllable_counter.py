@@ -6,6 +6,7 @@
 import re
 import nltk
 from nltk.corpus import cmudict
+import pyphen
 
 # Ensure CMUDict is downloaded for syllable counting
 try:
@@ -13,6 +14,9 @@ try:
 except LookupError:
     nltk.download('cmudict')
     _cmudict = cmudict.dict()
+
+# Initialize pyphen hyphenator for English
+_hyphenator = pyphen.Pyphen(lang='en_US')
 
 
 def _count_syllables_fallback(word: str) -> int:
@@ -68,3 +72,40 @@ def count_syllables_per_line(lines: list[str]) -> list[int]:
 def get_syllable_breakdown(line: str) -> list[tuple[str, int]]:
     words = re.findall(r"[a-zA-Z']+", line)
     return [(word, count_syllables_in_word(word)) for word in words]
+
+
+def split_word_into_syllables(word: str) -> list[str]:
+    """
+    Split a word into its actual syllables using pyphen hyphenation.
+    
+    Args:
+        word: The word to split
+        
+    Returns:
+        List of syllable strings, e.g., 'heroes' -> ['he', 'roes']
+    """
+    clean = ''.join(c for c in word.lower() if c.isalpha())
+    
+    if not clean:
+        return []
+    
+    # Use pyphen for proper hyphenation-based syllable splitting
+    hyphenated = _hyphenator.inserted(clean)
+    syllables = hyphenated.split('-')
+    
+    # If pyphen returns single syllable but CMUDict says more, trust pyphen for splitting
+    # but preserve original casing from input word
+    if len(syllables) == 1:
+        return [word]
+    
+    # Restore original casing by mapping syllables back to original word
+    result = []
+    pos = 0
+    for syl in syllables:
+        # Find the corresponding part in original word (case-insensitive match)
+        syl_len = len(syl)
+        original_part = word[pos:pos + syl_len]
+        result.append(original_part)
+        pos += syl_len
+    
+    return result if result else [word]

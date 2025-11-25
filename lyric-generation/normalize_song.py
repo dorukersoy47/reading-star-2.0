@@ -3,32 +3,20 @@
 # ========================
 # Adjusts lines to match target syllable count and formats output
 
-from syllable_counter import count_syllables_in_line, count_syllables_in_word
+import random
+from syllable_counter import count_syllables_in_line, count_syllables_in_word, split_word_into_syllables
 
 # Filler words (1 syllable each) to add when line is too short
 FILLER_WORDS = ["Oh", "Ah", "Hey", "Yeah", "Ooh", "Hmm", "Whoa", "Yay", "Woo"]
 
 
 def add_fillers_to_line(line: str, current_syllables: int, target_syllables: int) -> str:
-    """
-    Add filler words at the start of a line to reach target syllable count.
-    
-    Args:
-        line: The original line
-        current_syllables: Current syllable count
-        target_syllables: Target syllable count
-        
-    Returns:
-        Line with filler words prepended
-    """
     needed = target_syllables - current_syllables
     if needed <= 0:
         return line
     
-    # Select fillers (cycle through the list if needed)
-    fillers = []
-    for i in range(needed):
-        fillers.append(FILLER_WORDS[i % len(FILLER_WORDS)])
+    # Select fillers randomly
+    fillers = [random.choice(FILLER_WORDS) for _ in range(needed)]
     
     # Join fillers and prepend to line
     filler_str = " ".join(fillers)
@@ -37,8 +25,8 @@ def add_fillers_to_line(line: str, current_syllables: int, target_syllables: int
 
 def combine_words_for_syllables(words: list[str], current_syllables: int, target_syllables: int) -> list[str]:
     """
-    Combine adjacent words with '~' to indicate they should be sung as fewer syllables.
-    This marks words to be slurred together in singing.
+    Combine adjacent words to reduce syllable count.
+    Prioritizes combining the shortest adjacent word pairs first.
     
     Args:
         words: List of words in the line
@@ -46,79 +34,64 @@ def combine_words_for_syllables(words: list[str], current_syllables: int, target
         target_syllables: Target syllable count
         
     Returns:
-        List of words/word-groups with some combined using '~'
+        List of words with some combined using '~'
     """
     excess = current_syllables - target_syllables
-    if excess <= 0:
+    if excess <= 0 or len(words) < 2:
         return words
     
-    result = []
-    i = 0
+    # Work with a mutable list
+    result = list(words)
     combinations_made = 0
     
-    while i < len(words):
-        if combinations_made < excess and i + 1 < len(words):
-            # Combine this word with the next one
-            # The '~' indicates these words are sung together as one beat
-            combined = f"{words[i]}~{words[i+1]}"
-            result.append(combined)
-            combinations_made += 1
-            i += 2  # Skip the next word since we combined it
-        else:
-            result.append(words[i])
-            i += 1
+    while combinations_made < excess and len(result) >= 2:
+        # Find the adjacent pair with the shortest total length
+        min_length = float('inf')
+        min_index = -1
+        
+        for i in range(len(result) - 1):
+            # Calculate combined length of adjacent pair
+            pair_length = len(result[i]) + len(result[i + 1])
+            if pair_length < min_length:
+                min_length = pair_length
+                min_index = i
+        
+        if min_index == -1:
+            break
+        
+        # Combine the shortest pair
+        combined = f"{result[min_index]}~{result[min_index + 1]}"
+        result = result[:min_index] + [combined] + result[min_index + 2:]
+        combinations_made += 1
     
     return result
 
 
-def split_line_to_syllables(line: str, target_syllables: int) -> list[str]:
-    """
-    Split a line into a list of syllable strings.
-    Words that are combined (with ~) count as one syllable unit.
-    
-    Args:
-        line: The normalized line (may contain ~ for combined words)
-        target_syllables: Target number of syllables
-        
-    Returns:
-        List of strings, one per syllable beat
-    """
+def split_line_to_syllables(line: str, target_syllables: int) -> list[list[str]]:
     # Split by spaces to get words/word-groups
     parts = line.split()
-    syllables = []
+    word_syllables = []
     
     for part in parts:
         if "~" in part:
-            # Combined words count as one syllable unit
-            syllables.append(part)
+            # Combined words - keep them together as one unit
+            # Split each component and flatten, but mark as combined
+            combined_parts = part.split("~")
+            all_syllables = []
+            for subpart in combined_parts:
+                syllables = split_word_into_syllables(subpart)
+                all_syllables.extend(syllables)
+            # Join with ~ to show they're combined (sung as one beat)
+            word_syllables.append(["~".join(all_syllables)])
         else:
-            # Split word into its syllables (approximate by distributing)
-            word_syllable_count = count_syllables_in_word(part)
-            if word_syllable_count == 1:
-                syllables.append(part)
-            else:
-                # For multi-syllable words, we add the word once per syllable
-                # with a marker to show which syllable it is
-                for s in range(word_syllable_count):
-                    if s == 0:
-                        syllables.append(part)  # First syllable gets the word
-                    else:
-                        syllables.append("-")   # Continuation marker
+            # Regular word - split into syllables
+            syllables = split_word_into_syllables(part)
+            word_syllables.append(syllables)
     
-    return syllables
+    return word_syllables
 
 
 def normalize_line(line: str, target_syllables: int) -> dict:
-    """
-    Normalize a single line to match target syllable count.
-    
-    Args:
-        line: Original line text
-        target_syllables: Target syllable count
-        
-    Returns:
-        Dict with 'original', 'normalized', 'syllables' (list), and 'action' taken
-    """
     current_syllables = count_syllables_in_line(line)
     
     if current_syllables == target_syllables:
@@ -163,19 +136,6 @@ def normalize_line(line: str, target_syllables: int) -> dict:
 
 
 def normalize_song(lines: list[str], target_syllables: int) -> dict:
-    """
-    Normalize all lines of a song to match target syllable count.
-    
-    Args:
-        lines: List of line strings
-        target_syllables: Target syllables per line
-        
-    Returns:
-        Dict with:
-        - 'normalized_lines': List of normalized line strings
-        - 'syllable_array': 2D array - each line is an array of syllable strings
-        - 'details': List of detailed info for each line
-    """
     normalized_lines = []
     syllable_array = []
     details = []
