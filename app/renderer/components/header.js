@@ -1,26 +1,13 @@
 import { goBack, navigateTo } from "../router.js";
+import { getIcon } from "./loadIcons.js";
 
-async function loadIcon(target, path) {
-  const el = typeof target === "string" ? document.getElementById(target) : target;
-  if (!el) return;
-  try {
-    let svgText = await fetch(path).then(r => r.text());
-    svgText = svgText.replace(/\s(width|height)="[^"]*"/g, "");
-    svgText = svgText.replace(/\sstroke="[^"]*"/g, ' stroke="currentColor"');
-    svgText = svgText.replace("<svg", '<svg class="icon" stroke-width="2.5"');
-    el.innerHTML = svgText;
-  } catch (err) {
-    console.warn("loadIcon failed", path, err);
-  }
-}
-
-const makeBtn = (id, iconPath, onClick) => {
+const makeBtn = (id, name, onClick) => {
   const b = document.createElement("button");
   b.id = id;
   b.className = "header-button";
   b.setAttribute("aria-label", id);
   if (onClick) b.onclick = onClick;
-  loadIcon(b, iconPath);
+  b.innerHTML = getIcon(name);
   return b;
 }
 
@@ -31,7 +18,7 @@ export function Header(canGoBack, title) {
   const hLeft = document.createElement("div");
   hLeft.className = "header-left";
   if (canGoBack) {
-    hLeft.appendChild(makeBtn("back", "assets/icons/arrow-left.svg", () => goBack()));
+    hLeft.appendChild(makeBtn("back", "arrow-left", () => goBack()));
   }
 
   const hCenter = document.createElement("div");
@@ -46,9 +33,9 @@ export function Header(canGoBack, title) {
   const hRight = document.createElement("div");
   hRight.className = "header-right";
 
-  hRight.appendChild(makeBtn("help", "assets/icons/circle-question-mark.svg"));
-  hRight.appendChild(makeBtn("settings", "assets/icons/settings.svg"));
-  hRight.appendChild(makeBtn("quit", "assets/icons/x.svg", () => window.close()));
+  hRight.appendChild(makeBtn("help", "circle-question-mark"));
+  hRight.appendChild(makeBtn("settings", "settings"));
+  hRight.appendChild(makeBtn("quit", "x", () => window.close()));
 
   el.appendChild(hLeft);
   el.appendChild(hCenter);
