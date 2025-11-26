@@ -1,6 +1,8 @@
 import { navigateTo } from "./router.js";
+import { loadIcons } from "./components/loadIcons.js";
 
-window.onload = () => {
+window.onload = async () => {
+  await loadIcons();
   navigateTo("home");
 };
 
