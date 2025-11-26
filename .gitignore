@@ -1,7 +1,9 @@
 # Python
 venv/
 .venv/
-lyric-generation/__pychache__
+lyric-generation/venv/
+__pycache__/
+lyric-generation/__pycache__/
 
 # vscode settings
 .vscode/
