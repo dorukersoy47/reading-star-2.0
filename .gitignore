@@ -1,7 +1,7 @@
-# (Python) Virtual Environments
+# Python
 venv/
 .venv/
-ibm-granite/venv/
+lyric-generation/__pychache__
 
 # vscode settings
 .vscode/
