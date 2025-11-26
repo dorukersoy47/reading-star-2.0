@@ -1,0 +1,8 @@
+torch
+torchvision
+torchaudio
+accelerate
+transformers
+pyphen
+syllapy
+nltk

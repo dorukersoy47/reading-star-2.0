@@ -1,0 +1,21 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.home-title {
+  font-size: 3.5em;
+  font-weight: 800;
+  margin-top: 0;
+}
+
+.home-buttons {
+  width: 65%;
+  display: grid;
+  gap: 2em;
+  grid-template-columns: 1fr 1fr;
+}
