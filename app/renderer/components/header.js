@@ -1,7 +1,7 @@
 import { goBack, navigateTo } from "../router.js";
 import { getIcon } from "./loadIcons.js";
 
-const makeBtn = (id, name, onClick) => {
+const makeIconBtn = (id, name, onClick) => {
   const b = document.createElement("button");
   b.id = id;
   b.className = "header-button";
@@ -18,7 +18,7 @@ export function Header(canGoBack, title) {
   const hLeft = document.createElement("div");
   hLeft.className = "header-left";
   if (canGoBack) {
-    hLeft.appendChild(makeBtn("back", "arrow-left", () => goBack()));
+    hLeft.appendChild(makeIconBtn("back", "arrow-left", () => goBack()));
   }
 
   const hCenter = document.createElement("div");
@@ -33,9 +33,9 @@ export function Header(canGoBack, title) {
   const hRight = document.createElement("div");
   hRight.className = "header-right";
 
-  hRight.appendChild(makeBtn("help", "circle-question-mark"));
-  hRight.appendChild(makeBtn("settings", "settings"));
-  hRight.appendChild(makeBtn("quit", "x", () => window.close()));
+  hRight.appendChild(makeIconBtn("help", "circle-question-mark"));
+  hRight.appendChild(makeIconBtn("settings", "settings"));
+  hRight.appendChild(makeIconBtn("quit", "x", () => window.close()));
 
   el.appendChild(hLeft);
   el.appendChild(hCenter);
