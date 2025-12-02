@@ -13,7 +13,7 @@ SEQUENCE = "AABB"
 SYLLABLE_COUNT = 8
 
 # Song topic
-SONG_TOPIC = "Going on picnic with friends"
+SONG_TOPIC = "animals"
 
 # Generation parameters
 MAX_TOKENS_SONG = 400
