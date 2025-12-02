@@ -141,3 +141,26 @@ body {
   opacity: 0.5;
   transition: transform 8s ease-in-out;
 }
+
+.song-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#lyrics {
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+.lyric-line {
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+  color: var(--text);
+  white-space: pre-wrap;
+}
