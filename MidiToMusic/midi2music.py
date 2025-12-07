@@ -7,8 +7,8 @@ import numpy
 import struct
 import os
 
-audioBankPath = "/Users/sinansensurucu/VSCode/UCL Code/Second Year/COMP0016/MidiToMusic/Audio_Bank/ReadingStar 2.0.sf2"
-midiBankPath  = "/Users/sinansensurucu/VSCode/UCL Code/Second Year/COMP0016/MidiToMusic/MIDI_Bank/TestMIDI.json"
+audioBankPath = "/Users/sinansensurucu/VSCode/UCL Code/Second Year/COMP0016/reading-star-2.0/MidiToMusic/Audio_Bank/ReadingStar 2.0.sf2"
+midiBankPath  = "/Users/sinansensurucu/VSCode/UCL Code/Second Year/COMP0016/reading-star-2.0/MidiToMusic/MIDI_Bank/TestMIDI.json"
 
 sampleRate    = 44100
 tailInSeconds = 1.0
@@ -27,7 +27,6 @@ def getSf2Preset(sf2Path, instrument, channel):
         if f.read(4) != b"sfbk":
             raise ValueError("Not a SoundFont2 (sfbk) file")
 
-        # Locate LIST 'pdta'
         pdta_offset = None
         pdta_size = None
 
