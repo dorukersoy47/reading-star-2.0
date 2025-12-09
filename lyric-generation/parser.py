@@ -1,8 +1,3 @@
-# ========================
-# PARSING MODULE
-# ========================
-# Methods to crop and format song text before syllable counting
-
 import re
 from config import STANZA_COUNT, LINE_COUNT
 
@@ -22,10 +17,8 @@ def remove_empty_lines(song: str) -> str:
 
 def remove_numbering(song: str) -> str:
     lines = song.splitlines()
-    # Remove leading numbers/bullets from each line
     cleaned = []
     for ln in lines:
-        # Remove patterns like "1.", "1)", "1:", "-", "*" at start
         cleaned_line = re.sub(r"^\s*[\d]+[.\):\-]\s*", "", ln)
         cleaned_line = re.sub(r"^\s*[\-\*]\s*", "", cleaned_line)
         cleaned.append(cleaned_line)
