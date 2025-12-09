@@ -1,4 +1,4 @@
-# Reading Start 2.0
+# Reading Star 2.0
 
 ### 🎵 Inclusive Sing-Along Application for Children
 

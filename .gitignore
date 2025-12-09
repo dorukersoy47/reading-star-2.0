@@ -1,3 +1,13 @@
+# Python
+venv/
+.venv/
+lyric-generation/venv/
+__pycache__/
+lyric-generation/__pycache__/
+
+# vscode settings
+.vscode/
+
 # Logs
 logs
 *.log
