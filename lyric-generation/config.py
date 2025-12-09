@@ -1,9 +1,3 @@
-# ========================
-# CONFIGURATION MODULE
-# ========================
-# Central configuration for song generation parameters
-
-# Model configuration
 MODEL_PATH = "ibm-granite/granite-4.0-micro"
 
 # Song structure constants
@@ -13,7 +7,7 @@ SEQUENCE = "AABB"
 SYLLABLE_COUNT = 8
 
 # Song topic
-SONG_TOPIC = "animals"
+SONG_TOPIC = "Adventuring in the Star Wars Universe"
 
 # Generation parameters
 MAX_TOKENS_SONG = 400
