@@ -1,6 +1,6 @@
 import { navigateTo } from "../router.js";
 
-export const title = "Song Page";
+export let title = "Song Page";
 
 export function Render(data) {
   const el = document.createElement("div");
