@@ -1,0 +1,81 @@
+.my-songs-page {
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#songList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Add spacing between tracks */
+  width: 100%;
+}
+
+.track {
+  display: grid;
+  grid-template-columns: 1fr auto; /* Main content on the left, extra info on the right */
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.05); /* Slightly off-transparent background */
+  border-radius: 0.8rem;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.instrumental-button {
+  font-size: 1.8rem; /* Slightly larger for better readability */
+  font-weight: bold;
+  padding: 1.2rem;
+  background: var(--button); /* Use the button color from the theme */
+  color: var(--button-text); /* Use the button text color from the theme */
+  border: none;
+  border-radius: 0.5rem;
+  text-align: left; /* Align text to the left */
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.instrumental-button:hover {
+  background: var(--button-hover); /* Use the hover color from the theme */
+  transform: translateY(-2px);
+}
+
+.lyric-button {
+  font-size: 1.6rem; /* Slightly larger for readability */
+  font-weight: 600; /* Slightly less bold than instrumental */
+  padding: 1rem;
+  background: var(--background); /* Use the background color for contrast */
+  color: var(--text); /* Use the text color for readability */
+  border-radius: 0.5rem;
+  text-align: left; /* Align text to the left */
+  margin-left: 1.5rem; /* Indent lyric buttons */
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.lyric-button:hover {
+  background: var(--button-hover); /* Use the hover color for consistency */
+  color: var(--button-text); /* Change text color on hover for better contrast */
+  transform: translateY(-2px);
+}
+
+/* Optional: Add space for additional information on the right */
+.track > .instrumental-button,
+.track > .lyric-button {
+  grid-column: 1; /* Keep buttons in the left column */
+}
+
+.track > .extra-info {
+  grid-column: 2; /* Place additional information in the right column */
+  text-align: right;
+  font-size: 1.4rem; /* Slightly larger for readability */
+  color: var(--subtitle); /* Use the subtitle color for softer contrast */
+}
+
+.extra-info p {
+  margin: 0.2rem 0; /* Add slight spacing between lines */
+}

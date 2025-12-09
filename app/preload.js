@@ -6,3 +6,8 @@ contextBridge.exposeInMainWorld('versions', {
   electron: () => process.versions.electron,
   ping: () => ipcRenderer.invoke('ping')
 })
+
+contextBridge.exposeInMainWorld('songAPI', {
+    loadAllSongs: () => ipcRenderer.invoke('loadAllSongs'),
+    loadLyricsForSong: (path) => ipcRenderer.invoke('loadLyricsForSong', path)
+});

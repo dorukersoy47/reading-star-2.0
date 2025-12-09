@@ -54,8 +54,8 @@ body {
 }
 
 .header-button {
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: transparent;
@@ -79,8 +79,7 @@ body {
 }
 
 .header-button svg {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.7rem;
   color: var(--title);
 }
 
@@ -103,7 +102,7 @@ body {
 
 #title {
   margin: 0;
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 700;
   color: var(--title);
 }
@@ -140,4 +139,27 @@ body {
   filter: blur(70px);
   opacity: 0.5;
   transition: transform 8s ease-in-out;
+}
+
+.song-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#lyrics {
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+.lyric-line {
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+  color: var(--text);
+  white-space: pre-wrap;
 }
