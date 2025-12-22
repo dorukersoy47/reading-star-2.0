@@ -15,7 +15,7 @@ export function Render() {
     </div>
   `;
 
-  el.querySelector("#create").onclick = () => navigateTo("createSong");
+  el.querySelector("#create").onclick = () => navigateTo("createInstrumental");
   el.querySelector("#mysongs").onclick = () => navigateTo("mySongs");
 
   return el;

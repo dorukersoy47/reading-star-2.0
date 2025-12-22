@@ -1,13 +1,15 @@
 import { Header } from "./components/header.js";
 import * as HomePage from "./pages/home.js";
-import * as CreateSongPage from "./pages/createSong.js";
+import * as CreateInstrumentalPage from "./pages/createInstrumental.js";
+import * as CreateLyricsPage from "./pages/createLyrics.js";
 import * as MySongsPage from "./pages/mySongs.js";
 import * as SongPage from "./pages/song.js";
 import * as SettingsPage from "./pages/settings.js";
 
 const routes = {
   home: HomePage,
-  createSong: CreateSongPage,
+  createInstrumental: CreateInstrumentalPage,
+  createLyrics: CreateLyricsPage,
   mySongs: MySongsPage,
   song: SongPage,
   settings: SettingsPage
