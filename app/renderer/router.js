@@ -3,12 +3,14 @@ import * as HomePage from "./pages/home.js";
 import * as CreateSongPage from "./pages/createSong.js";
 import * as MySongsPage from "./pages/mySongs.js";
 import * as SongPage from "./pages/song.js";
+import * as SettingsPage from "./pages/settings.js";
 
 const routes = {
   home: HomePage,
   createSong: CreateSongPage,
   mySongs: MySongsPage,
-  song: SongPage
+  song: SongPage,
+  settings: SettingsPage
 };
 
 const historyStack = [];

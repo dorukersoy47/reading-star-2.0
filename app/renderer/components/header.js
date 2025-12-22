@@ -34,7 +34,7 @@ export function Header(canGoBack, title) {
   hRight.className = "header-right";
 
   hRight.appendChild(makeIconBtn("help", "circle-question-mark"));
-  hRight.appendChild(makeIconBtn("settings", "settings"));
+  hRight.appendChild(makeIconBtn("settings", "settings", () => navigateTo("settings")));
   hRight.appendChild(makeIconBtn("quit", "x", () => window.close()));
 
   el.appendChild(hLeft);
