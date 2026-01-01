@@ -83,6 +83,11 @@ body {
   color: var(--title);
 }
 
+.header-button-x:hover svg {
+  color: var(--red);
+  transition: color 0.2s ease;
+}
+
 .header {
   position: fixed;
   inset: 0;
