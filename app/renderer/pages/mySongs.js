@@ -15,6 +15,14 @@ export function Render() {
   return el;
 }
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = String(date.getDate());
+  const month = String(date.getMonth() + 1);
+  const year = date.getFullYear();
+  return `${day}.${month}.${year}`;
+};
+
 async function loadSongs(rootElement) {
   const container = rootElement.querySelector("#songList");
   container.innerHTML = "<p>Loading songs...</p>";
@@ -35,7 +43,16 @@ async function loadSongs(rootElement) {
     if (song.instrumental) {
       const instBtn = document.createElement("button");
       instBtn.className = "instrumental-button button";
-      instBtn.textContent = song.instrumental.title;
+      instBtn.innerHTML = `
+        <div class="inst-btn-left">
+          <div class="inst-btn-title">${song.instrumental.title}</div>
+          <div class="inst-btn-subtitle">Instrumental</div>
+        </div>
+        <div class="inst-btn-dates">
+          <div class="inst-btn-date">Created: ${formatDate(song.instrumental.date)}</div>
+          <div class="inst-btn-date">Last Played: ${formatDate(song.instrumental.last_played)}</div>
+        </div>
+      `;
       instBtn.onclick = () => navigateTo("instrumental", { instData: song.instrumental, songPath: song.path });
       el.appendChild(instBtn);
     }
@@ -46,7 +63,12 @@ async function loadSongs(rootElement) {
         for (const set of sets) {
           const setbtn = document.createElement("button");
           setbtn.className = "button lyric-button";
-          setbtn.textContent = set.data.title;
+          setbtn.innerHTML = `
+            <div class="lyric-btn-left">
+              <div class="lyric-btn-title">${set.data.title}</div>
+              <div class="lyric-btn-subtitle">Lyric Set</div>
+            </div>
+          `
           setbtn.onclick = () => navigateTo("song", { setData: set.data, songPath: song.path });
           el.appendChild(setbtn);
         }

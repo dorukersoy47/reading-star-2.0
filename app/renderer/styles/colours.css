@@ -3,6 +3,7 @@
   /* pinky cream */
   --background: #F8F8F8; 
   --text: #4A3457;
+  --text-secondary: #4b3d53b4;
   --title: #685384;
   --subtitle: #7c6895;
 
@@ -10,6 +11,7 @@
   --button: #8F78B0;
   --button-hover: #A68DC4;
   --button-text: #F8F8F8;
+  --button-secondary-text: #f8f8f8e4;
   --button-visible: #FFD966;
 
   --header-button-hover: #00000013;
