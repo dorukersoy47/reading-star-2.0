@@ -2,6 +2,7 @@
 venv/
 .venv/
 lyric-generation/venv/
+lyric-generation/models/
 __pycache__/
 lyric-generation/__pycache__/
 
