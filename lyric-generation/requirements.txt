@@ -3,6 +3,8 @@ torchvision
 torchaudio
 accelerate
 transformers
+optimum[openvino]
+openvino
 pyphen
 syllapy
 nltk
