@@ -1,4 +1,4 @@
-MODEL_PATH = "ibm-granite/granite-4.0-micro"
+MODEL_PATH = "ibm-granite/granite-3.3-2b-instruct"
 
 # Song structure constants
 STANZA_COUNT = 2
@@ -10,6 +10,6 @@ SYLLABLE_COUNT = 8
 SONG_TOPIC = "Adventuring in the Star Wars Universe"
 
 # Generation parameters
-MAX_TOKENS_SONG = 400
+MAX_TOKENS_SONG = 100
 TEMPERATURE = 0.7
 TOP_P = 0.9

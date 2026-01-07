@@ -9,17 +9,17 @@ def generate_stanza(topic: str, line_count: int = LINE_COUNT,
     chat = [
         {
             "role": "system",
-            "content": "You are a creative assistant that writes simple, child-friendly song lyrics. Output exactly the number of lines requested, nothing more."
+            "content": "You are a creative assistant that writes simple, child-friendly song lyrics. Output only the raw lyrics, no labels or annotations."
         },
         {
             "role": "user",
-            "content": f"""Write a verse of a children's song about "{topic}".
-REQUIREMENTS for this verse:
-- Exactly {line_count} lines
-- '{sequence}' rhyme scheme  
-- {syllable_count} syllables per line
+            "content": f"""Write a {line_count}-line verse of a children's song about "{topic}".
 
-Output ONLY the {line_count} lines for this verse. No titles, no annotations."""
+Rules:
+- Follow the {sequence} rhyme scheme (do NOT write the letters, just make the lines rhyme accordingly)
+- Each line should have approximately {syllable_count} syllables
+
+Output ONLY the {line_count} lines of lyrics. No titles, no letter labels like (A) or (B), no explanations."""
         },
     ]
 
