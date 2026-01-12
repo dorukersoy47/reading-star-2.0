@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from models.songs import Instrumental, LyricSet
 from models.generation import GeneratedInstrumental, GeneratedLyrics
 from datetime import datetime
@@ -9,11 +10,27 @@ SONG_DIR = Path(__file__).parent.parent.resolve() / "songs"
 "GET"
 # retrieve an instrumental from its ID
 def getInstrumental(instrumentalId : str) -> Instrumental:
-    pass
+    instFile = SONG_DIR / instrumentalId / "instrumental.json"
+
+    if not instFile.exists():
+        raise HTTPException(status_code=404, detail="instrumental not found")
+
+    with open(instFile, "r") as f:
+        data = json.load(f)
+
+    return Instrumental(**data)
 
 # retrieve a lyric set from its and its instrumental's ID
 def getLyricSet(instrumentalId : str, lyricSetId : str) -> LyricSet:
-    pass
+    lyricFile = SONG_DIR / instrumentalId / "lyrics" / f"{lyricSetId}.json"
+
+    if not lyricFile.exists():
+        raise HTTPException(status_code=404, detail="lyric set not found")
+    
+    with open(lyricFile, "r") as f:
+        data = json.load(f)
+    
+    return LyricSet(**data)
 
 
 "POST" 
