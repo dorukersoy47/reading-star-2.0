@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from models.songs import Instrumental, LyricSet
+from models.songs import Instrumental, LyricSet, InstrumentalInformation, LyricSetInformation
 from models.generation import GeneratedInstrumental, GeneratedLyrics
 from datetime import datetime
 from pathlib import Path
@@ -8,26 +8,64 @@ import json
 SONG_DIR = Path(__file__).parent.parent.resolve() / "songs"
 
 "GET"
-# retrieve an instrumental from its ID
-def getInstrumental(instrumentalId : str) -> Instrumental:
-    instFile = SONG_DIR / instrumentalId / "instrumental.json"
+# retrieve information of every instrumental and their lyric sets
+def getAllInstrumentalsAndSets() -> list[InstrumentalInformation]:
+    results = []
 
-    if not instFile.exists():
+    for inst_dir in SONG_DIR.iterdir():
+        inst_file = inst_dir / "instrumental.json"
+        lyrics_dir = inst_dir / "lyrics"
+
+        if not inst_file.exists():
+            continue
+        
+        instrumental = Instrumental(**json.load(open(inst_file)))
+
+        set_summaries = []
+        if lyrics_dir.exists():
+            for set_file in lyrics_dir.glob("set_*.json"):
+                lyric_set = LyricSet(**json.load(open(set_file)))
+                set_summaries.append(
+                    LyricSetInformation(
+                        id=lyric_set.id,
+                        created_at=lyric_set.created_at,
+                        last_played=lyric_set.last_played,
+                        title=lyric_set.title
+                    )
+                )
+        
+        results.append(
+            InstrumentalInformation(
+                id=instrumental.id,
+                created_at=instrumental.created_at,
+                last_played=instrumental.last_played,
+                title=instrumental.title,
+                lyricSets=set_summaries
+            )
+        )
+    
+    return results
+
+# retrieve an instrumental from its ID
+def getInstrumental(instrumental_id: str) -> Instrumental:
+    inst_file = SONG_DIR / instrumental_id / "instrumental.json"
+
+    if not inst_file.exists():
         raise HTTPException(status_code=404, detail="instrumental not found")
 
-    with open(instFile, "r") as f:
+    with open(inst_file, "r") as f:
         data = json.load(f)
 
     return Instrumental(**data)
 
 # retrieve a lyric set from its and its instrumental's ID
-def getLyricSet(instrumentalId : str, lyricSetId : str) -> LyricSet:
-    lyricFile = SONG_DIR / instrumentalId / "lyrics" / f"{lyricSetId}.json"
+def getLyricSet(instrumental_id: str, set_id: str) -> LyricSet:
+    lyric_file = SONG_DIR / instrumental_id / "lyrics" / f"{set_id}.json"
 
-    if not lyricFile.exists():
+    if not lyric_file.exists():
         raise HTTPException(status_code=404, detail="lyric set not found")
     
-    with open(lyricFile, "r") as f:
+    with open(lyric_file, "r") as f:
         data = json.load(f)
     
     return LyricSet(**data)
@@ -35,11 +73,11 @@ def getLyricSet(instrumentalId : str, lyricSetId : str) -> LyricSet:
 
 "POST" 
 # store a new generated instrumental
-def storeInstrumental(data : GeneratedInstrumental) -> Instrumental:
-    instId = _getNextInstrumentalId()
+def storeInstrumental(data: GeneratedInstrumental) -> Instrumental:
+    inst_id = _getNextInstrumentalId()
 
-    newInstrumental = Instrumental(
-        id=instId,
+    new_instrumental = Instrumental(
+        id=inst_id,
         created_at=datetime.now(),
         last_played=datetime.now(),
         title=data.title,
@@ -47,22 +85,22 @@ def storeInstrumental(data : GeneratedInstrumental) -> Instrumental:
         music=data.music
     )
 
-    instDir = SONG_DIR / instId
-    instDir.mkdir(parents=True)
+    inst_dir = SONG_DIR / inst_id
+    inst_dir.mkdir(parents=True)
 
-    with open(instDir / "instrumental.json", "w") as f:
-        json.dump(newInstrumental.model_dump(), f, default=str)
+    with open(inst_dir / "instrumental.json", "w") as f:
+        json.dump(new_instrumental.model_dump(), f, default=str)
 
-    (instDir / "lyrics").mkdir()
+    (inst_dir / "lyrics").mkdir()
 
-    return newInstrumental
+    return new_instrumental
 
 # store a new generated lyric set within an instrumental
-def storeLyricSet(instrumentalId : str, data : GeneratedLyrics) -> LyricSet:
-    lyricsId = _getNextLyricSetId(instrumentalId)
+def storeLyricSet(instrumental_id: str, data: GeneratedLyrics) -> LyricSet:
+    set_id = _getNextLyricSetId(instrumental_id)
 
-    newLyricSet = LyricSet(
-        id=lyricsId,
+    new_lyric_set = LyricSet(
+        id=set_id,
         created_at=datetime.now(),
         last_played=datetime.now(),
         title=data.title,
@@ -70,31 +108,31 @@ def storeLyricSet(instrumentalId : str, data : GeneratedLyrics) -> LyricSet:
         lyrics=data.lyrics
     )
 
-    lyricPath = SONG_DIR / instrumentalId / "lyrics" / f"{lyricsId}.json"
+    lyric_path = SONG_DIR / instrumental_id / "lyrics" / f"{set_id}.json"
 
-    with open(lyricPath, "w") as f:
-        json.dump(newLyricSet.model_dump(), f, default=str)
+    with open(lyric_path, "w") as f:
+        json.dump(new_lyric_set.model_dump(), f, default=str)
     
-    return newLyricSet
+    return new_lyric_set
 
 
 "PUT"
 # update an instrumental
-def updateInstrumental(instrumental : Instrumental) -> None:
+def updateInstrumental(instrumental: Instrumental) -> None:
     pass
 
 # update a lyric set within an instrumental
-def updateLyricSet(instrumentalId : str, lyricSet : LyricSet) -> None:
+def updateLyricSet(instrumental_id: str, lyric_set: LyricSet) -> None:
     pass
 
 
 "DELETE"
 # delete an instrumental from its ID
-def deleteInstrumental(instrumentalId : str) -> None:
+def deleteInstrumental(instrumental_id: str) -> None:
     pass
 
 # delete a lyric set from its and its instrumental's ID
-def deleteLyricSet(instrumentalId : str, lyricSetId : str) -> None:
+def deleteLyricSet(instrumental_id: str, set_id: str) -> None:
     pass
 
 
@@ -106,16 +144,16 @@ def _getNextInstrumentalId() -> str:
     if not existing:
         return "inst_001"
     
-    lastInt = int(existing[-1].stem.split("_")[1])
-    return f"inst_{lastInt+1:03d}"
+    last_int = int(existing[-1].stem.split("_")[1])
+    return f"inst_{last_int+1:03d}"
 
 # find the next lyric set id
-def _getNextLyricSetId(instrumentalId : str) -> str:
-    lyrics_dir = SONG_DIR / instrumentalId / "lyrics"
+def _getNextLyricSetId(instrumental_id: str) -> str:
+    lyrics_dir = SONG_DIR / instrumental_id / "lyrics"
     existing = sorted(lyrics_dir.glob("set_*.json"))
 
     if not existing:
         return "set_001"
 
-    lastInt = int(existing[-1].stem.split("_")[1])
-    return f"set_{lastInt+1:03d}"
+    last_int = int(existing[-1].stem.split("_")[1])
+    return f"set_{last_int+1:03d}"

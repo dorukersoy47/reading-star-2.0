@@ -3,14 +3,6 @@ from typing import List
 from datetime import datetime
 from models.generation import InstrumentalPrompt, LyricsPrompt
 
-class Instrumental(BaseModel):
-    id: str
-    created_at: datetime
-    last_played: datetime
-    title: str
-    prompt: InstrumentalPrompt
-    music: str
-
 class LyricSet(BaseModel):
     id: str
     created_at: datetime
@@ -19,9 +11,24 @@ class LyricSet(BaseModel):
     prompt: LyricsPrompt
     lyrics: List[List[List[str]]]
 
-# class Track(BaseModel):
-#     instrumental: Instrumental
-#     lyricSets: List[LyricSet]
+class Instrumental(BaseModel):
+    id: str
+    created_at: datetime
+    last_played: datetime
+    title: str
+    prompt: InstrumentalPrompt
+    music: str
 
-# class SongLibrary(BaseModel):
-#     tracks: List[Track]
+
+class LyricSetInformation(BaseModel):
+    id: str
+    created_at: datetime
+    last_played: datetime
+    title: str
+
+class InstrumentalInformation(BaseModel):
+    id: str
+    created_at: datetime
+    last_played: datetime
+    title: str
+    lyricSets: List[LyricSetInformation]
