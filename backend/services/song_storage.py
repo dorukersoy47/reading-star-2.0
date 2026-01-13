@@ -12,6 +12,9 @@ SONG_DIR = Path(__file__).parent.parent.resolve() / "songs"
 def getAllInstrumentalsAndSets() -> list[InstrumentalInformation]:
     results = []
 
+    if not SONG_DIR.exists():
+        return results
+
     for inst_dir in SONG_DIR.iterdir():
         inst_file = inst_dir / "instrumental.json"
         lyrics_dir = inst_dir / "lyrics"
