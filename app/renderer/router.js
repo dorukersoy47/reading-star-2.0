@@ -3,7 +3,8 @@ import * as HomePage from "./pages/home.js";
 import * as CreateInstrumentalPage from "./pages/createInstrumental.js";
 import * as CreateLyricsPage from "./pages/createLyrics.js";
 import * as MySongsPage from "./pages/mySongs.js";
-import * as SongPage from "./pages/song.js";
+import * as LyricSetPage from "./pages/lyricSet.js";
+import * as InstrumentalPage from "./pages/instrumental.js";
 import * as SettingsPage from "./pages/settings.js";
 
 const routes = {
@@ -11,7 +12,8 @@ const routes = {
   createInstrumental: CreateInstrumentalPage,
   createLyrics: CreateLyricsPage,
   mySongs: MySongsPage,
-  song: SongPage,
+  lyricSet: LyricSetPage,
+  instrumental: InstrumentalPage,
   settings: SettingsPage
 };
 

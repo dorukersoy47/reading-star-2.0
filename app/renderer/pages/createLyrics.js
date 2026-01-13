@@ -2,14 +2,14 @@ import { navigateTo } from "../router.js";
 
 export const title = "Create the Lyrics!";
 
-export function Render() {
+export function Render(data) {
   const el = document.createElement("div");
   el.className = "create-lyrics-page";
   
   el.innerHTML = `
     <form>
       <div class="prompt-text">
-        <textarea id="text-box" class="prompt-box" name="prompt" placeholder="Describe the theme for the lyrics..."></textarea>
+        <textarea id="prompt" class="prompt-box" name="prompt" placeholder="Describe the theme for the lyrics..."></textarea>
       </div>
       <div class="creation-settings">
         <div class="creation-setting">
@@ -25,7 +25,12 @@ export function Render() {
     </form>
   `;
 
-  el.querySelector("#generate").onclick = () => navigateTo("createLyrics");
+  el.querySelector("#generate").onclick = async () => {
+    const promptText = document.getElementById('prompt').value;
+    const complexity = "hmm";
+    const result = await window.backendAPI.createLyricSet(data.instId, promptText, complexity);
+    navigateTo("lyricSet", { instId : data.instId, setId : result.id});
+  }
 
   return el;
 }

@@ -9,7 +9,7 @@ export function Render() {
   el.innerHTML = `
     <form>
       <div class="prompt-text">
-        <textarea id="text-box" class="prompt-box" name="prompt" placeholder="Describe the theme for the instrumental..."></textarea>
+        <textarea id="prompt" class="prompt-box" name="prompt" placeholder="Describe the theme for the instrumental..."></textarea>
       </div>
       <div class="creation-settings">
         <div class="creation-setting">
@@ -33,7 +33,13 @@ export function Render() {
     </form>
   `;
 
-  el.querySelector("#generate").onclick = () => navigateTo("createLyrics");
+  el.querySelector("#generate").onclick = async () => {
+    const promptText = document.getElementById('prompt').value;
+    const speed = "hmm"
+    const length = "hmm"
+    const result = await window.backendAPI.createInstrumental(promptText, speed, length)
+    navigateTo("instrumental", { instId : result.id });
+  }
 
   return el;
 }

@@ -1,6 +1,6 @@
 import { navigateTo } from "../router.js";
 
-export let title = "Song Page";
+export let title = "Lyric Set Page";
 
 export function Render(data) {
   const el = document.createElement("div");
@@ -10,7 +10,9 @@ export function Render(data) {
     <div id="lyrics"></div>
   `;
 
-  formatLyrics(el, data.setData.lyrics);
+  window.backendAPI.getLyricSet(data.instId, data.setId).then((setData) => {
+    formatLyrics(el, setData.lyrics);
+  });
 
   return el;
 }
