@@ -4,14 +4,14 @@ from typing import cast
 from pathlib import Path
 import os
 
-from config import MAX_TOKENS_SONG, TEMPERATURE, TOP_P
+from lyricGen.config import MAX_TOKENS_SONG, TEMPERATURE, TOP_P
 
 # Force offline behavior at runtime
 os.environ["HF_HUB_OFFLINE"] = "1"
 os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
 
 # Always use the locally prepared OpenVINO model directory
-ov_model_dir = Path(__file__).parent / "models" / "ov_model"
+ov_model_dir = Path(__file__).parent / "ai_models" / "ov_model"
 if not ov_model_dir.exists():
     raise FileNotFoundError(
         f"Offline model not found at '{ov_model_dir}'. "

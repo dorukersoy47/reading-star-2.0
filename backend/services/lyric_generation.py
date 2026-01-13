@@ -1,8 +1,5 @@
 from models.generation import LyricsPrompt, GeneratedLyrics
+from lyricGen.main import main as lyrics
 
 def generateLyrics(prompt : LyricsPrompt) -> GeneratedLyrics:
-    return GeneratedLyrics(
-        title="test lyrics",
-        prompt=prompt,
-        lyrics=[[["la", "la"],["lo"]],[["le"],["le"]]]
-    )
+    return lyrics(prompt)

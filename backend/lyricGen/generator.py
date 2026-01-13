@@ -1,7 +1,7 @@
-from config import (
-    SONG_TOPIC, STANZA_COUNT, LINE_COUNT, SEQUENCE, SYLLABLE_COUNT,
+from lyricGen.config import (
+    STANZA_COUNT, LINE_COUNT, SEQUENCE, SYLLABLE_COUNT,
 )
-from model import generate_text
+from lyricGen.model import generate_text
 
 
 def generate_stanza(topic: str, line_count: int = LINE_COUNT,
@@ -26,7 +26,7 @@ Output ONLY the {line_count} lines of lyrics. No titles, no letter labels like (
     return generate_text(chat)
 
 
-def generate_song(topic: str = SONG_TOPIC, stanza_count: int = STANZA_COUNT, line_count: int = LINE_COUNT, 
+def generate_song(topic, stanza_count: int = STANZA_COUNT, line_count: int = LINE_COUNT, 
                   sequence: str = SEQUENCE, syllable_count: int = SYLLABLE_COUNT) -> str:
     stanzas = []
     

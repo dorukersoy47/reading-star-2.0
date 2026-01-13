@@ -6,9 +6,6 @@ LINE_COUNT = 4
 SEQUENCE = "AABB"
 SYLLABLE_COUNT = 8
 
-# Song topic
-SONG_TOPIC = "Adventuring in the Star Wars Universe"
-
 # Generation parameters
 MAX_TOKENS_SONG = 100
 TEMPERATURE = 0.7

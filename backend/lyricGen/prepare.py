@@ -2,10 +2,10 @@ from pathlib import Path
 import os
 from transformers import AutoTokenizer
 from optimum.intel import OVModelForCausalLM
-from config import MODEL_PATH
+from lyricGen.config import MODEL_PATH
 
 def main():
-    target_dir = Path(__file__).parent / "models" / "ov_model"
+    target_dir = Path(__file__).parent / "ai_models" / "ov_model"
     target_dir.mkdir(parents=True, exist_ok=True)
 
     # Optional: avoid any network retries/telemetry during export

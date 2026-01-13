@@ -1,8 +1,9 @@
 # Python
 venv/
 .venv/
-lyric-generation/venv/
-lyric-generation/models/
+*/venv/
+*/.venv/
+**/ai_models/
 __pycache__/
 lyric-generation/__pycache__/
 

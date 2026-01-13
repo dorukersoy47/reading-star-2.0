@@ -1,15 +1,16 @@
 from time import sleep
 import time
 
-from config import SONG_TOPIC, STANZA_COUNT, LINE_COUNT, SYLLABLE_COUNT
-from generator import generate_song
-from parser import format_song, parse_to_lines
-from normalize_song import normalize_song
+from lyricGen.config import STANZA_COUNT, LINE_COUNT, SYLLABLE_COUNT
+from lyricGen.generator import generate_song
+from lyricGen.parser import format_song, parse_to_lines
+from lyricGen.normalize_song import normalize_song
+from models.generation import LyricsPrompt, GeneratedLyrics
 
-def main() -> list[list[list[str]]]:
-    print(f"Generating song about '{SONG_TOPIC}'...")
+def main(prompt : LyricsPrompt) -> GeneratedLyrics:
+    print(f"Generating song about '{prompt.text}'...")
     start = time.time()
-    raw_song = generate_song()
+    raw_song = generate_song(topic=prompt.text)
     end = time.time()
     print(f"Total Time Spent: {end - start}")
 
@@ -34,8 +35,11 @@ def main() -> list[list[list[str]]]:
     print("\nSYLLABLE ARRAY:")
     print(syllable_array)
     
-    return syllable_array
-
+    return GeneratedLyrics(
+        title="test",
+        prompt=prompt,
+        lyrics=syllable_array
+    )
 
 if __name__ == '__main__':
     result = main()
