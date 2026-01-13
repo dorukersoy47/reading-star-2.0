@@ -1,3 +1,11 @@
 fastapi
 uvicorn
 pydantic
+torch
+accelerate
+transformers
+optimum[openvino]
+openvino
+pyphen
+syllapy
+nltk
