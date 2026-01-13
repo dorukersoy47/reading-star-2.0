@@ -38,7 +38,7 @@ export function Render() {
     const speed = "hmm"
     const length = "hmm"
     const result = await window.backendAPI.createInstrumental(promptText, speed, length)
-    navigateTo("instrumental", { instId : result.id });
+    navigateTo({page:"instrumental", data:{ instId : result.id }, title:result.title});
   }
 
   return el;

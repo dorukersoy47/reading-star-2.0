@@ -14,7 +14,7 @@ export function Render(data) {
     `;
 
     el.querySelector("#ontoLyrics").onclick = async () => {
-      navigateTo("createLyrics", { instId : instrumentalData.id });
+      navigateTo({page:"createLyrics", data:{ instId : instrumentalData.id }});
     }
   });
 

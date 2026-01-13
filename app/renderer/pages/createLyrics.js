@@ -29,7 +29,7 @@ export function Render(data) {
     const promptText = document.getElementById('prompt').value;
     const complexity = "hmm";
     const result = await window.backendAPI.createLyricSet(data.instId, promptText, complexity);
-    navigateTo("lyricSet", { instId : data.instId, setId : result.id});
+    navigateTo({page:"lyricSet", data:{ instId : data.instId, setId : result.id}, title:result.title});
   }
 
   return el;

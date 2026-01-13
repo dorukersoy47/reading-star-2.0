@@ -52,7 +52,7 @@ async function loadSongs(rootElement) {
         <div class="inst-btn-date">Last Played: ${formatDate(instrumental.last_played)}</div>
       </div>
     `;
-    instBtn.onclick = () => navigateTo("instrumental", { instId: instrumental.id });
+    instBtn.onclick = () => navigateTo({page:"instrumental", data:{ instId: instrumental.id }, title:instrumental.title});
     el.appendChild(instBtn);
 
     for (const set of instrumental.lyricSets) {
@@ -64,7 +64,7 @@ async function loadSongs(rootElement) {
           <div class="lyric-btn-subtitle">Lyric Set</div>
         </div>
       `
-      setbtn.onclick = () => navigateTo("lyricSet", { instId: instrumental.id, setId: set.id });
+      setbtn.onclick = () => navigateTo({page:"lyricSet", data:{ instId: instrumental.id, setId: set.id }, title:set.title});
       el.appendChild(setbtn);
     }
 

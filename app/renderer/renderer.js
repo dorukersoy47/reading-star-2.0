@@ -3,7 +3,7 @@ import { loadIcons } from "./components/loadIcons.js";
 
 window.onload = async () => {
   await loadIcons();
-  navigateTo("home");
+  navigateTo({page:"home"});
 };
 
 const test = async () => {
