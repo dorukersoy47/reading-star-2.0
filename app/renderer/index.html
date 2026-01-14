@@ -4,7 +4,13 @@
     <meta charset="UTF-8" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
+      content="
+        default-src 'self';
+        style-src 'self' 'unsafe-inline';
+        script-src 'self';
+        media-src 'self' http://127.0.0.1:8000;
+        connect-src 'self' http://127.0.0.1:8000;
+      "
     />
     <meta
       http-equiv="X-Content-Security-Policy"

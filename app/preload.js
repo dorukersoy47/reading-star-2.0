@@ -1,5 +1,11 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
+const API_BASE = 'http://127.0.0.1:8000';
+
+function convertAudioURL(audio_url) {
+    return `${API_BASE}${audio_url}`;
+}
+
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
@@ -15,5 +21,6 @@ contextBridge.exposeInMainWorld('backendAPI', {
   getInstrumental: (instId) => ipcRenderer.invoke('getInstrumental', instId),
   getLyricSet: (instId, setId) => ipcRenderer.invoke('getLyricSet', { instId, setId }),
   createInstrumental: (text, speed, length) => ipcRenderer.invoke('createInstrumental', { text, speed, length }),
-  createLyricSet: (instId, text, complexity) => ipcRenderer.invoke('createLyricSet', { instId, text, complexity })
+  createLyricSet: (instId, text, complexity) => ipcRenderer.invoke('createLyricSet', { instId, text, complexity }),
+  convertAudioURL
 });
