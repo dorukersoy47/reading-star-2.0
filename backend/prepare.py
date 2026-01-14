@@ -4,7 +4,7 @@ from transformers import AutoTokenizer
 from optimum.intel import OVModelForCausalLM
 from lyricGen.config import MODEL_PATH
 
-def main():
+def download_lyric_model():
     target_dir = Path(__file__).parent / "ai_models" / "ov_model"
     target_dir.mkdir(parents=True, exist_ok=True)
 
@@ -27,6 +27,13 @@ def main():
     ov_model.save_pretrained(target_dir.as_posix())
 
     print("Done. Offline model saved.")
+
+def download_song_model():
+    pass
+
+def main():
+    download_lyric_model()
+    download_song_model()
 
 if __name__ == "__main__":
     main()
