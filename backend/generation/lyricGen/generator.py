@@ -1,11 +1,9 @@
-from config import (
-    STANZA_COUNT, LINE_COUNT, SEQUENCE, SYLLABLE_COUNT,
-)
-from lyricGen.model import generate_text
+from generation.config import LINE_COUNT, SEQUENCE
+from generation.lyricGen.model import generate_text
 
 
-def generate_stanza(topic: str, line_count: int = LINE_COUNT,
-                    sequence: str = SEQUENCE, syllable_count: int = SYLLABLE_COUNT) -> str:    
+def generate_stanza(topic: str, syllable_count: int, line_count: int = LINE_COUNT,
+                    sequence: str = SEQUENCE) -> str:    
     chat = [
         {
             "role": "system",
@@ -26,8 +24,7 @@ Output ONLY the {line_count} lines of lyrics. No titles, no letter labels like (
     return generate_text(chat)
 
 
-def generate_song(topic, stanza_count: int = STANZA_COUNT, line_count: int = LINE_COUNT, 
-                  sequence: str = SEQUENCE, syllable_count: int = SYLLABLE_COUNT) -> str:
+def generate_song(topic, stanza_count: int, syllable_count: int, line_count: int = LINE_COUNT, sequence: str = SEQUENCE) -> str:
     stanzas = []
     
     for i in range(1, stanza_count + 1):
@@ -35,9 +32,9 @@ def generate_song(topic, stanza_count: int = STANZA_COUNT, line_count: int = LIN
         
         stanza = generate_stanza(
             topic=topic,
+            syllable_count=syllable_count,
             line_count=line_count,
             sequence=sequence,
-            syllable_count=syllable_count,
         )
         
         stanza_lines = [ln.strip() for ln in stanza.splitlines() if ln.strip()]
@@ -46,3 +43,18 @@ def generate_song(topic, stanza_count: int = STANZA_COUNT, line_count: int = LIN
         stanzas.append(stanza)
     
     return "\n\n".join(stanzas)
+
+def generate_title(topic: str) -> str:
+    chat = [
+        {
+            "role": "system",
+            "content": "You are a creative assistant that writes simple, child-friendly song titles. Output only the raw title, no labels or annotations."
+        },
+        {
+            "role": "user",
+            "content": f"""Suggest a short, creative, and engaging title for a children's song about "{topic}"."""
+        },
+    ]
+
+    title = generate_text(chat, max_tokens=10);
+    return title.strip()

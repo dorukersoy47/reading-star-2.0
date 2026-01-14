@@ -4,29 +4,29 @@ from typing import cast
 from pathlib import Path
 import os
 
-from config import LYRIC_MAX_TOKENS, TEMPERATURE, TOP_P
+from generation.config import LYRIC_MAX_TOKENS, TEMPERATURE, TOP_P
 
 # Force offline behavior at runtime
 os.environ["HF_HUB_OFFLINE"] = "1"
 os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
 
 # Always use the locally prepared OpenVINO model directory
-ov_model_dir = Path(__file__).parent / "ai_models" / "ov_model"
-if not ov_model_dir.exists():
+lyric_model_dir = Path(__file__).parent.parent / "ai_models" / "lyric_model"
+if not lyric_model_dir.exists():
     raise FileNotFoundError(
-        f"Offline model not found at '{ov_model_dir}'. "
+        f"Offline model not found at '{lyric_model_dir}'. "
         f"Run: python lyric-generation\\prepare_model.py"
     )
 
-tokenizer = AutoTokenizer.from_pretrained(ov_model_dir.as_posix())
+tokenizer = AutoTokenizer.from_pretrained(lyric_model_dir.as_posix())
 
 model = cast(OVModelForCausalLM, OVModelForCausalLM.from_pretrained(
-    ov_model_dir.as_posix(),
+    lyric_model_dir.as_posix(),
     export=False,       # already exported
     load_in_8bit=False, # already compressed
 ))
 
-def generate_text(chat: list[dict], max_tokens: int = MAX_TOKENS_SONG) -> str:
+def generate_text(chat: list[dict], max_tokens: int = LYRIC_MAX_TOKENS) -> str:
     input_ids = tokenizer.apply_chat_template(
         chat,
         return_tensors="pt",
