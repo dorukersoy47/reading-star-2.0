@@ -1,5 +1,6 @@
 from generation.config import LINE_COUNT, SEQUENCE
 from generation.lyricGen.model import generate_text
+import re
 
 
 def generate_stanza(topic: str, syllable_count: int, line_count: int = LINE_COUNT,
@@ -52,9 +53,10 @@ def generate_title(topic: str) -> str:
         },
         {
             "role": "user",
-            "content": f"""Suggest a short, creative, and engaging title for a children's song about "{topic}"."""
+            "content": f"""Suggest a short (2-4 words), creative, and engaging title for a children's song about "{topic}"."""
         },
     ]
 
-    title = generate_text(chat, max_tokens=10);
+    title = generate_text(chat, max_tokens=10)
+    title = re.sub(r'[^\w\s]', '', title).strip()
     return title.strip()

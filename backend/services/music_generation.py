@@ -1,12 +1,10 @@
 from models.generation import InstrumentalPrompt, GeneratedInstrumental
 from pathlib import Path
-
-def musicGen(genre: str, path: Path): # simulated call to music generation module, will store a wav file in path
-    print(genre, path)
+from generation.musicgen.generator import generate_music
 
 def generateMusic(prompt : InstrumentalPrompt, path: Path) -> GeneratedInstrumental:
-    musicGen(prompt.genre, path)
+    generate_music(prompt.genre, path)
     return GeneratedInstrumental(
-        title="test instrumental",
+        title=prompt.genre,
         prompt=prompt,
     )

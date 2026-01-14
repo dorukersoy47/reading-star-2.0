@@ -10,5 +10,3 @@ pyphen
 syllapy
 nltk
 numpy
-onnx
-onnxruntime

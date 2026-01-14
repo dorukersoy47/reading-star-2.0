@@ -59,7 +59,7 @@ def generate_music(genre, output_folder: Path = None):
         extended_audio = np.int16(extended_audio)
 
     # Save file
-    filename = f"{genre}_extended_{int(time.time())}.wav"
+    filename = f"instrumental.wav"
 
     if output_folder:
         output_folder.mkdir(parents=True, exist_ok=True)
