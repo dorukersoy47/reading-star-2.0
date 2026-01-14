@@ -9,24 +9,20 @@ export function Render() {
   
   el.innerHTML = `
     <form>
-      <div class="prompt-text">
-        <textarea id="prompt" class="prompt-box" name="prompt" placeholder="Describe the theme for the instrumental..."></textarea>
-      </div>
       <div class="creation-settings">
         <div class="creation-setting">
-          <label for="speed">Speed</label>
-          <select id="speed">
-            <option value="slow">Slow</option>
-            <option value="medium">Medium</option>
-            <option value="fast">Fast</option>
-          </select>
-        </div>
-        <div class="creation-setting">
-          <label for="length">Length</label>
-          <select id="length">
-            <option value="short">Short</option>
-            <option value="medium">Medium</option>
-            <option value="long">Long</option>
+          <label for="genre">Genre</label>
+          <select id="genre">
+            <option value="nursery_rhyme">Nursery Rhyme</option>
+            <option value="hip_hop">Hip Hop</option>
+            <option value="rock">Rock</option>
+            <option value="jazz">Jazz</option>
+            <option value="classical">Classical</option>
+            <option value="reggae">Reggae</option>
+            <option value="rnb">R&B</option>
+            <option value="punk">Punk</option>
+            <option value="metal">Metal</option>
+            <option value="bollywood">Bollywood</option>
           </select>
         </div>
       </div>
@@ -35,13 +31,11 @@ export function Render() {
   `;
 
   el.querySelector("#generate").onclick = async () => {
-    const promptText = document.getElementById('prompt').value;
-    const speed = "hmm"
-    const length = "hmm"
+    const genre = document.getElementById('genre').value;
     try {
       showLoadingScreen();
 
-      const result = await window.backendAPI.createInstrumental(promptText, speed, length);
+      const result = await window.backendAPI.createInstrumental(genre);
 
       navigateTo({ page: "instrumental", data: { instId: result.id }, title: result.title });
     } catch (error) {

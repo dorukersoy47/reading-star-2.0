@@ -1,5 +1,6 @@
 import { navigateTo } from "../router.js";
 import { showLoadingScreen, hideLoadingScreen } from "../components/loading.js";
+import { lengthToStanzaCount, complexityToSyllableCount } from "../components/utility.js";
 
 export const title = "Create the Lyrics!";
 
@@ -14,6 +15,14 @@ export function Render(data) {
       </div>
       <div class="creation-settings">
         <div class="creation-setting">
+          <label for="length">Length</label>
+          <select id="length">
+            <option value="short">Short</option>
+            <option value="medium">Medium</option>
+            <option value="long">Long</option>
+          </select>
+        </div>
+        <div class="creation-setting">
           <label for="complexity">Complexity</label>
           <select id="complexity">
             <option value="simple">Simple</option>
@@ -27,15 +36,19 @@ export function Render(data) {
   `;
 
   el.querySelector("#generate").onclick = async () => {
-    const promptText = document.getElementById("prompt").value;
-    const complexity = "hmm";
+    const topic = document.getElementById("prompt").value;
+    const length = document.getElementById("length").value;
+    const complexity = document.getElementById("complexity").value;
+
+    const stanza_count = lengthToStanzaCount(length);
+    const syllable_count = complexityToSyllableCount(complexity)
 
     try {
       // Show the loading screen
       showLoadingScreen();
 
       // Perform the API call
-      const result = await window.backendAPI.createLyricSet(data.instId, promptText, complexity);
+      const result = await window.backendAPI.createLyricSet(data.instId, topic, stanza_count, syllable_count);
 
       // Navigate to the next page after the process completes
       navigateTo({ page: "lyricSet", data: { instId: data.instId, setId: result.id }, title: result.title });

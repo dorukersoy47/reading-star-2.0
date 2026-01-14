@@ -34,21 +34,21 @@ ipcMain.handle('getLyricSet', async (_, { instId, setId }) => {
 
 /* POST */
 // create a new instrumental
-ipcMain.handle('createInstrumental', async (_, { text, speed, length }) => {
+ipcMain.handle('createInstrumental', async (_, { genre }) => {
     const response = await fetch(`${API_BASE_URL}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, speed, length })
+        body: JSON.stringify({ genre })
     });
     return await response.json();
 })
 
 // create a new lyrics set
-ipcMain.handle('createLyricSet', async (_, { instId, text, complexity }) => {
+ipcMain.handle('createLyricSet', async (_, { instId, topic, stanza_count, syllable_count }) => {
     const response = await fetch(`${API_BASE_URL}/${instId}/lyrics`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, complexity })
+        body: JSON.stringify({ topic, stanza_count, syllable_count })
     });
     return await response.json();
 })
