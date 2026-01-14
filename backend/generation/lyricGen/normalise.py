@@ -72,7 +72,7 @@ def combine_syllables(syllable_array: list[list[str]], excess: int) -> list[list
     return result
 
 
-def normalize_line(line: str, target_syllables: int) -> list[list[str]]:
+def normalise_line(line: str, target_syllables: int) -> list[list[str]]:
     syllable_array = line_to_syllable_array(line)
     current_syllables = count_total_syllables(syllable_array)
     
@@ -86,5 +86,5 @@ def normalize_line(line: str, target_syllables: int) -> list[list[str]]:
         return combine_syllables(syllable_array, excess)
 
 
-def normalize_song(lines: list[str], target_syllables: int) -> list[list[list[str]]]:
-    return [normalize_line(line, target_syllables) for line in lines]
+def normalise_song(lines: list[str], target_syllables: int) -> list[list[list[str]]]:
+    return [normalise_line(line, target_syllables) for line in lines]
