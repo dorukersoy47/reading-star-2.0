@@ -17,7 +17,7 @@ class Instrumental(BaseModel):
     last_played: datetime
     title: str
     prompt: InstrumentalPrompt
-    music: str
+    audio_url: str
 
 
 class LyricSetInformation(BaseModel):

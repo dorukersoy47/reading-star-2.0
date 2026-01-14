@@ -14,7 +14,6 @@ class LyricsPrompt(BaseModel):
 class GeneratedInstrumental(BaseModel):
     title: str
     prompt: InstrumentalPrompt
-    music: str
 
 class GeneratedLyrics(BaseModel):
     title: str

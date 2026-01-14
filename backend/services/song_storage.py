@@ -76,20 +76,17 @@ def getLyricSet(instrumental_id: str, set_id: str) -> LyricSet:
 
 "POST" 
 # store a new generated instrumental
-def storeInstrumental(data: GeneratedInstrumental) -> Instrumental:
-    inst_id = _getNextInstrumentalId()
-
+def storeInstrumental(inst_id: str, data: GeneratedInstrumental, audio_url: str) -> Instrumental:
     new_instrumental = Instrumental(
         id=inst_id,
         created_at=datetime.now(),
         last_played=datetime.now(),
         title=data.title,
         prompt=data.prompt,
-        music=data.music
+        audio_url=audio_url
     )
 
     inst_dir = SONG_DIR / inst_id
-    inst_dir.mkdir(parents=True)
 
     with open(inst_dir / "instrumental.json", "w") as f:
         json.dump(new_instrumental.model_dump(), f, default=str)
@@ -160,3 +157,17 @@ def _getNextLyricSetId(instrumental_id: str) -> str:
 
     last_int = int(existing[-1].stem.split("_")[1])
     return f"set_{last_int+1:03d}"
+
+# create the directory for an instrumental, returning the id
+def createInstrumentalDirectory() -> str:
+    inst_id = _getNextInstrumentalId()
+    inst_dir = SONG_DIR / inst_id
+    inst_dir.mkdir(parents=True)
+    return inst_id
+
+# get the directory for an instrumental with its id
+def getInstrumentalDirectory(inst_id: str) -> Path:
+    return SONG_DIR / inst_id
+
+def getInstrumentalAudioPath(inst_id: str) -> Path:
+    return getInstrumentalDirectory(inst_id) / "instrumental.wav"

@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
 from models.generation import InstrumentalPrompt, LyricsPrompt
 from models.songs import Instrumental, InstrumentalInformation, LyricSet
 from services.music_generation import generateMusic
@@ -23,13 +24,28 @@ def getInstrumental(inst_id: str):
 def getLyricSet(inst_id: str, set_id: str):
     return storage.getLyricSet(inst_id, set_id)
 
+# get an instrumental's audio as a file response from its ID
+@router.get("/{inst_id}/audio")
+def getInstrumentalAudio(inst_id: str):
+    audio_path = storage.getInstrumentalAudioPath(inst_id)
+
+    if not audio_path.exists():
+        raise HTTPException(status_code=404, detail="audio not found")
+    
+    return FileResponse(
+        audio_path,
+        media_type="audio/wav",
+        filename="instrumental.wav"
+    )
+
 
 "POST"
 # generate and store a new instrumental
 @router.post("/", response_model=Instrumental)
 def createInstrumental(req: InstrumentalPrompt):
-    instrumental = generateMusic(req)
-    return storage.storeInstrumental(instrumental)
+    inst_id = storage.createInstrumentalDirectory()
+    instrumental = generateMusic(req, storage.getInstrumentalDirectory(inst_id))
+    return storage.storeInstrumental(inst_id, instrumental, f"/instrumentals/{inst_id}/audio")
 
 # generate and store a new lyric set
 @router.post("/{inst_id}/lyrics", response_model=LyricSet)
