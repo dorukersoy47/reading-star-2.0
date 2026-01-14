@@ -3,11 +3,7 @@ import { loadIcons } from "./components/loadIcons.js";
 
 window.onload = async () => {
   await loadIcons();
-
-  const songs = await window.songAPI.loadAllSongs();
-  console.log("Loaded songs:", songs);
-
-  navigateTo("home");
+  navigateTo({page:"home"});
 };
 
 const test = async () => {

@@ -3,7 +3,8 @@ import * as HomePage from "./pages/home.js";
 import * as CreateInstrumentalPage from "./pages/createInstrumental.js";
 import * as CreateLyricsPage from "./pages/createLyrics.js";
 import * as MySongsPage from "./pages/mySongs.js";
-import * as SongPage from "./pages/song.js";
+import * as LyricSetPage from "./pages/lyricSet.js";
+import * as InstrumentalPage from "./pages/instrumental.js";
 import * as SettingsPage from "./pages/settings.js";
 
 const routes = {
@@ -11,23 +12,25 @@ const routes = {
   createInstrumental: CreateInstrumentalPage,
   createLyrics: CreateLyricsPage,
   mySongs: MySongsPage,
-  song: SongPage,
+  lyricSet: LyricSetPage,
+  instrumental: InstrumentalPage,
   settings: SettingsPage
 };
 
 const historyStack = [];
 let currentScreen = null;
 let currentData = null;
+let currentTitle = null;
 
-export function navigateTo(page, data = null, pushHistory = true) {
+export function navigateTo({page, data = null, pushHistory = true, title = null}) {
   const header = document.getElementById("header");
   header.innerHTML = "";
 
   if (pushHistory && currentScreen) {
-    historyStack.push({ page: currentScreen, data: currentData });
+    historyStack.push({ page: currentScreen, data: currentData, title: currentTitle});
   }
 
-  header.appendChild(Header(historyStack.length > 0, routes[page].title));
+  header.appendChild(Header(historyStack.length > 0, title || routes[page].title));
 
   const app = document.getElementById("app");
   app.innerHTML = "";
@@ -35,11 +38,12 @@ export function navigateTo(page, data = null, pushHistory = true) {
 
   currentScreen = page;
   currentData = data;
+  currentTitle = title;
 }
 
 export function goBack() {
   if (historyStack.length > 0) {
     const previous = historyStack.pop();
-    navigateTo(previous.page, previous.data, false);
+    navigateTo({page:previous.page, data:previous.data, pushHistory:false, title:previous.title});
   }
 }

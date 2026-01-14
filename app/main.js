@@ -1,56 +1,58 @@
 const { app, BrowserWindow, ipcMain } = require('electron/main')
 const path = require('node:path')
-const fs = require('fs/promises')
 
-// TEMPORARY TESTING LOCATION
-const SONGS_DIR = path.join(__dirname, 'songs') // path.join(app.getPath('userData'), 'songs')
+const API_BASE_URL = 'http://127.0.0.1:8000/instrumentals';
 
-async function ensureSongsFolder() {
-    await fs.mkdir(SONGS_DIR, { recursive: true });
-}
+/* GET */
+// get all instrumentals and their lyric sets
+ipcMain.handle('getAll', async () => {
+    const response = await fetch(`${API_BASE_URL}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return await response.json();
+});
 
-async function loadAllSongs() {
-    const songFolders = await fs.readdir(SONGS_DIR);
-    const songs = [];
+// get an instrumental from its ID
+ipcMain.handle('getInstrumental', async (_, instId) => {
+    const response = await fetch(`${API_BASE_URL}/${instId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return await response.json();
+});
 
-    for (const folderName of songFolders) {
-        const songPath = path.join(SONGS_DIR, folderName);
-        const stats = await fs.stat(songPath);
-        if (!stats.isDirectory()) continue;
+// get a lyric set from its and its instrumental's ID
+ipcMain.handle('getLyricSet', async (_, { instId, setId }) => {
+    const response = await fetch(`${API_BASE_URL}/${instId}/lyrics/${setId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return await response.json();
+});
 
-        const instrumentalPath = path.join(songPath, 'instrumental.json');
 
-        try {
-            const instrumentalData = JSON.parse(await fs.readFile(instrumentalPath, 'utf-8'));
-            songs.push({ id: folderName, path: songPath, instrumental: instrumentalData });
-        } catch (err) {
-            console.error("Error reading song:", err);
-        }
-    }
-    return songs;
-}
+/* POST */
+// create a new instrumental
+ipcMain.handle('createInstrumental', async (_, { genre }) => {
+    const response = await fetch(`${API_BASE_URL}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ genre })
+    });
+    return await response.json();
+})
 
-async function loadLyricsForSong(songPath) {
-    const lyricsPath = path.join(songPath, 'lyrics');
-    let files;
+// create a new lyrics set
+ipcMain.handle('createLyricSet', async (_, { instId, topic, stanza_count, syllable_count }) => {
+    const response = await fetch(`${API_BASE_URL}/${instId}/lyrics`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic, stanza_count, syllable_count })
+    });
+    return await response.json();
+})
 
-    try {
-        files = await fs.readdir(lyricsPath);
-    } catch {
-        return [];
-    }
-
-    const sets = [];
-    for (const file of files) {
-        if (!file.endsWith('.json')) continue;
-        const json = JSON.parse(await fs.readFile(path.join(lyricsPath, file), 'utf-8'));
-        sets.push({ id: file.replace('.json', ''), data: json });
-    }
-    return sets;
-}
-
-ipcMain.handle('loadAllSongs', loadAllSongs);
-ipcMain.handle('loadLyricsForSong', (_, songPath) => loadLyricsForSong(songPath));
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -67,6 +69,5 @@ const createWindow = () => {
 
 app.whenReady().then(async () => {
   ipcMain.handle('ping', () => 'pong')
-  await ensureSongsFolder()
   createWindow()
 })

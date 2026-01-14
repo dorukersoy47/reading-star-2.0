@@ -27,52 +27,45 @@ async function loadSongs(rootElement) {
   const container = rootElement.querySelector("#songList");
   container.innerHTML = "<p>Loading songs...</p>";
 
-  const songs = await window.songAPI.loadAllSongs();
+  const result = await window.backendAPI.getAll();
 
-  if (!songs || songs.length === 0) {
+  if (!result || result.length === 0) {
     container.innerHTML = "<p>No songs yet.</p>";
     return;
   }
 
   container.innerHTML = "";
 
-  for (const song of songs) {
+  for (const instrumental of result) {
     const el = document.createElement("div");
     el.className = "track";
 
-    if (song.instrumental) {
-      const instBtn = document.createElement("button");
-      instBtn.className = "instrumental-button button";
-      instBtn.innerHTML = `
-        <div class="inst-btn-left">
-          <div class="inst-btn-title">${song.instrumental.title}</div>
-          <div class="inst-btn-subtitle">Instrumental</div>
-        </div>
-        <div class="inst-btn-dates">
-          <div class="inst-btn-date">Created: ${formatDate(song.instrumental.date)}</div>
-          <div class="inst-btn-date">Last Played: ${formatDate(song.instrumental.last_played)}</div>
-        </div>
-      `;
-      instBtn.onclick = () => navigateTo("instrumental", { instData: song.instrumental, songPath: song.path });
-      el.appendChild(instBtn);
-    }
+    const instBtn = document.createElement("button");
+    instBtn.className = "instrumental-button button";
+    instBtn.innerHTML = `
+      <div class="inst-btn-left">
+        <div class="inst-btn-title">${instrumental.title}</div>
+        <div class="inst-btn-subtitle">Instrumental</div>
+      </div>
+      <div class="inst-btn-dates">
+        <div class="inst-btn-date">Created: ${formatDate(instrumental.created_at)}</div>
+        <div class="inst-btn-date">Last Played: ${formatDate(instrumental.last_played)}</div>
+      </div>
+    `;
+    instBtn.onclick = () => navigateTo({page:"instrumental", data:{ instId: instrumental.id }, title:instrumental.title});
+    el.appendChild(instBtn);
 
-    if (song.path) {
-      const sets = await window.songAPI.loadLyricsForSong(song.path);
-      if (sets && sets.length) {
-        for (const set of sets) {
-          const setbtn = document.createElement("button");
-          setbtn.className = "button lyric-button";
-          setbtn.innerHTML = `
-            <div class="lyric-btn-left">
-              <div class="lyric-btn-title">${set.data.title}</div>
-              <div class="lyric-btn-subtitle">Lyric Set</div>
-            </div>
-          `
-          setbtn.onclick = () => navigateTo("song", { setData: set.data, songPath: song.path });
-          el.appendChild(setbtn);
-        }
-      }
+    for (const set of instrumental.lyricSets) {
+      const setbtn = document.createElement("button");
+      setbtn.className = "button lyric-button";
+      setbtn.innerHTML = `
+        <div class="lyric-btn-left">
+          <div class="lyric-btn-title">${set.title}</div>
+          <div class="lyric-btn-subtitle">Lyric Set</div>
+        </div>
+      `
+      setbtn.onclick = () => navigateTo({page:"lyricSet", data:{ instId: instrumental.id, setId: set.id }, title:set.title});
+      el.appendChild(setbtn);
     }
 
     container.appendChild(el);
