@@ -7,9 +7,9 @@ class InstrumentalPrompt(BaseModel):
     length: str
 
 class LyricsPrompt(BaseModel):
-    text: str
-    complexity: str
-
+    topic: str
+    stanza_count: int
+    syllable_count: int
 
 class GeneratedInstrumental(BaseModel):
     title: str
