@@ -1,13 +1,21 @@
 import { navigateTo } from "../router.js";
+import { formatDate } from "../components/utility.js"
 
 export let title = "Lyric Set Page";
 
 export function Render(data) {
   const el = document.createElement("div");
-  el.className = "song-page";
+  el.className = "lyric-page";
   
   el.innerHTML = `
-    <div id="lyrics"></div>
+    <div class="lyric-page-left">
+      <div id="lyrics"></div>
+    </div>
+    <div class="lyric-page-right">
+      <div class="lyric-meta">
+        <div class="display-date">Created at: ${}</div>
+      </div>
+    </div>
   `;
 
   window.backendAPI.getLyricSet(data.instId, data.setId).then((setData) => {

@@ -146,7 +146,7 @@ body {
   transition: transform 8s ease-in-out;
 }
 
-.song-page {
+.lyric-page {
   display: flex;
   flex-direction: column;
   justify-content: center;

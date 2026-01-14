@@ -44,19 +44,13 @@ export function Render(data) {
     const syllable_count = complexityToSyllableCount(complexity)
 
     try {
-      // Show the loading screen
       showLoadingScreen();
-
-      // Perform the API call
       const result = await window.backendAPI.createLyricSet(data.instId, topic, stanza_count, syllable_count);
-
-      // Navigate to the next page after the process completes
       navigateTo({ page: "lyricSet", data: { instId: data.instId, setId: result.id }, title: result.title });
     } catch (error) {
       console.error("Error generating lyrics:", error);
       alert("Failed to generate the lyrics. Please try again.");
     } finally {
-      // Hide the loading screen
       hideLoadingScreen();
     }
   }
