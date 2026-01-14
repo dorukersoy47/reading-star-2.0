@@ -4,7 +4,7 @@ from typing import cast
 from pathlib import Path
 import os
 
-from lyricGen.config import MAX_TOKENS_SONG, TEMPERATURE, TOP_P
+from config import LYRIC_MAX_TOKENS, TEMPERATURE, TOP_P
 
 # Force offline behavior at runtime
 os.environ["HF_HUB_OFFLINE"] = "1"

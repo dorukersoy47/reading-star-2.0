@@ -1,7 +1,7 @@
 from time import sleep
 import time
 
-from lyricGen.config import STANZA_COUNT, LINE_COUNT, SYLLABLE_COUNT
+from config import STANZA_COUNT, LINE_COUNT, SYLLABLE_COUNT
 from lyricGen.generator import generate_song
 from lyricGen.parser import format_song, parse_to_lines
 from lyricGen.normalize_song import normalize_song

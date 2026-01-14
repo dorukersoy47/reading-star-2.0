@@ -1,4 +1,4 @@
-from lyricGen.config import (
+from config import (
     STANZA_COUNT, LINE_COUNT, SEQUENCE, SYLLABLE_COUNT,
 )
 from lyricGen.model import generate_text

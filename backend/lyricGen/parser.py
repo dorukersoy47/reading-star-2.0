@@ -1,5 +1,5 @@
 import re
-from lyricGen.config import STANZA_COUNT, LINE_COUNT
+from config import STANZA_COUNT, LINE_COUNT
 
 
 def remove_headings(song: str) -> str:
