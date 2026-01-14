@@ -1,10 +1,9 @@
 from pathlib import Path
-from generator import generate_music
-
+from generation.musicgen.generator import generate_music
 
 def main():
     # Define where you want files to go
-    save_dir = Path("./generated_music").parent
+    save_dir = Path("./generated_music")
 
     choice = 0
     while choice != "11":

@@ -6,7 +6,7 @@ from pathlib import Path
 from transformers import MusicgenForConditionalGeneration, AutoProcessor
 
 # Local imports
-from . import MUSIC_MAX_TOKENS, GENRES
+from generation.config import MUSIC_MAX_TOKENS, GENRES
 from .audio_util import extend_audio
 
 # Path to the locally downloaded model

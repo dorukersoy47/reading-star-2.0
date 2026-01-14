@@ -2,9 +2,7 @@ from pydantic import BaseModel
 from typing import List
 
 class InstrumentalPrompt(BaseModel):
-    text: str
-    speed: str
-    length: str
+    genre: str
 
 class LyricsPrompt(BaseModel):
     topic: str
