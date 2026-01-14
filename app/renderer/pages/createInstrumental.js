@@ -1,4 +1,5 @@
 import { navigateTo } from "../router.js";
+import { showLoadingScreen, hideLoadingScreen } from "../components/loading.js";
 
 export const title = "Create the Instrumental!";
 
@@ -37,8 +38,18 @@ export function Render() {
     const promptText = document.getElementById('prompt').value;
     const speed = "hmm"
     const length = "hmm"
-    const result = await window.backendAPI.createInstrumental(promptText, speed, length)
-    navigateTo({page:"instrumental", data:{ instId : result.id }, title:result.title});
+    try {
+      showLoadingScreen();
+
+      const result = await window.backendAPI.createInstrumental(promptText, speed, length);
+
+      navigateTo({ page: "instrumental", data: { instId: result.id }, title: result.title });
+    } catch (error) {
+      console.error("Error generating instrumental:", error);
+      alert("Failed to generate the instrumental. Please try again.");
+    } finally {
+      hideLoadingScreen();
+    }
   }
 
   return el;

@@ -1,4 +1,5 @@
 import { navigateTo } from "../router.js";
+import { showLoadingScreen, hideLoadingScreen } from "../components/loading.js";
 
 export const title = "Create the Lyrics!";
 
@@ -26,10 +27,25 @@ export function Render(data) {
   `;
 
   el.querySelector("#generate").onclick = async () => {
-    const promptText = document.getElementById('prompt').value;
+    const promptText = document.getElementById("prompt").value;
     const complexity = "hmm";
-    const result = await window.backendAPI.createLyricSet(data.instId, promptText, complexity);
-    navigateTo({page:"lyricSet", data:{ instId : data.instId, setId : result.id}, title:result.title});
+
+    try {
+      // Show the loading screen
+      showLoadingScreen();
+
+      // Perform the API call
+      const result = await window.backendAPI.createLyricSet(data.instId, promptText, complexity);
+
+      // Navigate to the next page after the process completes
+      navigateTo({ page: "lyricSet", data: { instId: data.instId, setId: result.id }, title: result.title });
+    } catch (error) {
+      console.error("Error generating lyrics:", error);
+      alert("Failed to generate the lyrics. Please try again.");
+    } finally {
+      // Hide the loading screen
+      hideLoadingScreen();
+    }
   }
 
   return el;
