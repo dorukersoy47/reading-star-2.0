@@ -1,8 +1,6 @@
 from pathlib import Path
 import os
-import subprocess
-import sys
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, MusicgenForConditionalGeneration, AutoProcessor
 from optimum.intel import OVModelForCausalLM
 from config import LYRIC_MODEL_PATH, MUSIC_MODEL_PATH
 
@@ -38,25 +36,19 @@ def download_song_model():
     os.environ["HF_HUB_OFFLINE"] = "0"  # allow download now
     os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
 
-    print(f"Preparing ONNX model from '{MUSIC_MODEL_PATH}' -> '{target_dir}'")
+    print(f"Downloading PyTorch model from '{MUSIC_MODEL_PATH}' -> '{target_dir}'")
 
-    # Use optimum-cli to export MusicGen to ONNX format with the text-to-audio task
-    # ONNX has broader model support than OpenVINO
-    cmd = [
-        sys.executable, "-m", "optimum.commands.optimum_cli",
-        "export", "onnx",
-        "--model", MUSIC_MODEL_PATH,
-        "--task", "text-to-audio",
-        str(target_dir)
-    ]
-    
-    print(f"Running: {' '.join(cmd)}")
-    result = subprocess.run(cmd, check=True)
-    
-    if result.returncode != 0:
-        raise RuntimeError(f"Failed to export music model. Exit code: {result.returncode}")
+    # Download processor (tokenizer + feature extractor) from HF and persist locally
+    processor = AutoProcessor.from_pretrained(MUSIC_MODEL_PATH)
+    processor.save_pretrained(target_dir.as_posix())
 
-    print("Done. Offline ONNX music model saved.")
+    # Download the full PyTorch model and save locally
+    # Note: MusicGen cannot be converted to OpenVINO/ONNX for inference,
+    # so we use the original PyTorch model
+    model = MusicgenForConditionalGeneration.from_pretrained(MUSIC_MODEL_PATH)
+    model.save_pretrained(target_dir.as_posix())
+
+    print("Done. Offline PyTorch music model saved.")
 
 def main():
     download_lyric_model()

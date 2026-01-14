@@ -4,7 +4,7 @@ from generator import generate_music
 
 def main():
     # Define where you want files to go
-    save_dir = Path("./generated_music")
+    save_dir = Path("./generated_music").parent
 
     choice = 0
     while choice != "11":

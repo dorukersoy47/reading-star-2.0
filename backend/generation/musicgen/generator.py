@@ -1,15 +1,20 @@
 import time
 import scipy.io.wavfile
 import numpy as np
+import sys
 from pathlib import Path
-from transformers import pipeline
+from transformers import MusicgenForConditionalGeneration, AutoProcessor
 
 # Local imports
-from ..config import MUSIC_MAX_TOKENS, GENRES, MUSIC_MODEL_PATH
-from audio_util import extend_audio
+from . import MUSIC_MAX_TOKENS, GENRES
+from .audio_util import extend_audio
+
+# Path to the locally downloaded model
+LOCAL_MODEL_PATH = Path(__file__).parent.parent / "ai_models" / "music_model"
 
 print("Initializing AI Model...")
-synthesiser = pipeline("text-to-audio", model=MUSIC_MODEL_PATH)
+processor = AutoProcessor.from_pretrained(LOCAL_MODEL_PATH)
+model = MusicgenForConditionalGeneration.from_pretrained(LOCAL_MODEL_PATH)
 
 
 def generate_music(genre, output_folder: Path = None):
@@ -21,25 +26,28 @@ def generate_music(genre, output_folder: Path = None):
     print(f"Prompt: {config['prompt']}")
     print("Generating base audio... (this will take a few minutes)\n")
 
-    # Generate music
-    music = synthesiser(
-        config["prompt"],
-        forward_params={
-            "do_sample": True,
-            "max_new_tokens": MUSIC_MAX_TOKENS
-        }
+    # Prepare inputs using the processor
+    inputs = processor(
+        text=[config["prompt"]],
+        padding=True,
+        return_tensors="pt"
     )
 
-    audio_data = music["audio"]
-    if len(audio_data.shape) > 1:
-        audio_data = audio_data.squeeze()
+    # Generate music using ONNX model
+    audio_values = model.generate(
+        **inputs,
+        do_sample=True,
+        max_new_tokens=MUSIC_MAX_TOKENS
+    )
 
-    audio_data = audio_data.astype(np.float32)
+    # Extract audio data
+    audio_data = audio_values[0, 0].numpy()
+    sampling_rate = model.config.audio_encoder.sampling_rate
 
     print("\nExtending audio with crossfaded repetitions...")
     extended_audio = extend_audio(
         audio_data,
-        music["sampling_rate"],
+        sampling_rate,
         target_duration=config["target_duration"],
         fade_duration=1.5
     )
@@ -61,7 +69,7 @@ def generate_music(genre, output_folder: Path = None):
 
     scipy.io.wavfile.write(
         str(file_path),
-        rate=music["sampling_rate"],
+        rate=sampling_rate,
         data=extended_audio
     )
 
