@@ -45,8 +45,14 @@ async function loadSongs(rootElement) {
         <div class="inst-btn-date">Last Played: ${formatDate(instrumental.last_played)}</div>
       </div>
     `;
-    instBtn.onclick = () => navigateTo({page:"instrumental", data:{ instId: instrumental.id }, title:instrumental.title});
+    instBtn.onclick = () => navigateTo({page:"instrumental", data:{ instId: instrumental.id }, title:instrumental.title, pushHistory:false});
     el.appendChild(instBtn);
+
+    // if (instrumental.lyricSets.length == 0){
+    //   const noSets = document.createElement("div");
+    //   noSets.innerHTML = `<p class="lyric-btn-title" style="font-size: 1.2rem">No lyric sets yet.</p>`;
+    //   el.appendChild(noSets);
+    // }
 
     for (const set of instrumental.lyricSets) {
       const setbtn = document.createElement("button");
@@ -56,7 +62,12 @@ async function loadSongs(rootElement) {
           <div class="lyric-btn-title">${set.title}</div>
           <div class="lyric-btn-subtitle">Lyric Set</div>
         </div>
+        <div class="inst-btn-dates">
+        </div>
       `
+      // <div class="lyric-btn-date">Created: ${formatDate(set.created_at)}</div>
+      // <div class="lyric-btn-date">Last Played: ${formatDate(set.last_played)}</div>
+      
       setbtn.onclick = () => navigateTo({page:"lyricSet", data:{ instId: instrumental.id, setId: set.id }, title:set.title});
       el.appendChild(setbtn);
     }

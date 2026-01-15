@@ -22,6 +22,15 @@ ipcMain.handle('getInstrumental', async (_, instId) => {
     return await response.json();
 });
 
+// get all lyric sets of an instrumental
+ipcMain.handle('getLyricSets', async (_, { instId }) => {
+    const response = await fetch(`${API_BASE_URL}/${instId}/lyrics`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return await response.json();
+});
+
 // get a lyric set from its and its instrumental's ID
 ipcMain.handle('getLyricSet', async (_, { instId, setId }) => {
     const response = await fetch(`${API_BASE_URL}/${instId}/lyrics/${setId}`, {

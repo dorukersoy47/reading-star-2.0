@@ -9,10 +9,13 @@ export function Render() {
   
   el.innerHTML = `
     <form>
+      <div class="prompt-text">
+        <textarea id="prompt" class="prompt-box" name="prompt" placeholder="Give keywords to describe the mood..."></textarea>
+      </div>
       <div class="creation-settings">
-        <div class="creation-setting">
+        <div class="creation-setting inst-creation-setting">
           <label for="genre">Genre</label>
-          <select id="genre">
+          <select id="genre" class="genre">
             <option value="nursery_rhyme">Nursery Rhyme</option>
             <option value="hip_hop">Hip Hop</option>
             <option value="rock">Rock</option>
@@ -37,7 +40,7 @@ export function Render() {
 
       const result = await window.backendAPI.createInstrumental(genre);
 
-      navigateTo({ page: "instrumental", data: { instId: result.id }, title: result.title });
+      navigateTo({ page: "instrumental", pushHistory: false, data: { instId: result.id }, title: result.title });
     } catch (error) {
       console.error("Error generating instrumental:", error);
       alert("Failed to generate the instrumental. Please try again.");

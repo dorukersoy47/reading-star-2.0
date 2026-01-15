@@ -1,7 +1,7 @@
 export const icons = new Map();
 
 export async function loadIcons() {
-  const names = ["arrow-left", "circle-question-mark", "settings", "x"];
+  const names = ["arrow-left", "circle-question-mark", "settings", "x", "play", "pause", "restart"];
   await Promise.all(names.map(async name => {
     const path = `assets/icons/${name}.svg`;
     try {
@@ -9,6 +9,9 @@ export async function loadIcons() {
       txt = txt.replace(/\s(width|height)="[^"]*"/g, "");
       txt = txt.replace(/\sstroke="[^"]*"/g, ' stroke="currentColor"');
       txt = txt.replace("<svg", '<svg class="icon" stroke-width="2.5"');
+      if (name == "play" || name == "pause"){
+        txt = txt.replace(/\sfill="[^"]*"/g, ' fill="currentColor"');
+      };
       icons.set(name, txt);
     } catch (e) {
       console.warn("preloadIcons failed", name, e);

@@ -5,21 +5,34 @@ export let title = "Lyric Set Page";
 
 export function Render(data) {
   const el = document.createElement("div");
-  el.className = "lyric-page";
+  el.className = "lyric-pagey";
   
   el.innerHTML = `
-    <div class="lyric-page-left">
-      <div id="lyrics"></div>
-    </div>
-    <div class="lyric-page-right">
-      <div class="lyric-meta">
-        <div class="display-date">Created at: ${}</div>
+    <div class="instrumental-subtitle display-date" id="instrumental"></div>
+    <div class="lyric-page">
+      <div class="lyric-page-left">
+        <div id="lyrics" class="white-box"></div>
+      </div>
+      <div class="lyric-page-right">
+        <div class="lyric-meta">
+          <div class="display-date" id="created"></div>
+          <div class="display-date" id="played"></div>
+        </div>
+      </div>
+      <div class="bottom-button-container">
+        <button type="button" class="button bottom-button" id="play">Play</button>
       </div>
     </div>
   `;
 
   window.backendAPI.getLyricSet(data.instId, data.setId).then((setData) => {
-    formatLyrics(el, setData.lyrics);
+    formatLyrics(document.getElementById("lyrics"), setData.lyrics);
+    document.getElementById("created").textContent = `Created: ${formatDate(setData.created_at)}`
+    document.getElementById("played").textContent = `Last Played: ${formatDate(setData.last_played)}`
+  });
+
+  window.backendAPI.getInstrumental(data.instId).then((instData) => {
+    document.getElementById("instrumental").textContent = `${instData.title}`
   });
 
   return el;
