@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 from models.generation import InstrumentalPrompt, LyricsPrompt
-from models.songs import Instrumental, InstrumentalInformation, LyricSet
+from models.songs import Instrumental, InstrumentalInformation, LyricSet, LyricSetInformation
+from typing import List
 from services.music_generation import generateMusic
 from services.lyric_generation import generateLyrics
 import services.song_storage as storage
@@ -18,6 +19,11 @@ def getAll():
 @router.get("/{inst_id}", response_model=Instrumental)
 def getInstrumental(inst_id: str):
     return storage.getInstrumental(inst_id)
+
+# get information of an instrumental's lyric sets
+@router.get("/{inst_id}/lyrics", response_model=List[LyricSetInformation])
+def getLyricSets(inst_id: str):
+    return storage.getLyricSets(inst_id)
 
 # get a lyric set from its and its instrumental's ID
 @router.get("/{inst_id}/lyrics/{set_id}", response_model=LyricSet)
@@ -37,6 +43,7 @@ def getInstrumentalAudio(inst_id: str):
         media_type="audio/wav",
         filename="instrumental.wav"
     )
+
 
 
 "POST"

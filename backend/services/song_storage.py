@@ -24,18 +24,7 @@ def getAllInstrumentalsAndSets() -> list[InstrumentalInformation]:
         
         instrumental = Instrumental(**json.load(open(inst_file)))
 
-        set_summaries = []
-        if lyrics_dir.exists():
-            for set_file in lyrics_dir.glob("set_*.json"):
-                lyric_set = LyricSet(**json.load(open(set_file)))
-                set_summaries.append(
-                    LyricSetInformation(
-                        id=lyric_set.id,
-                        created_at=lyric_set.created_at,
-                        last_played=lyric_set.last_played,
-                        title=lyric_set.title
-                    )
-                )
+        set_summaries = getLyricSets(inst_dir.name)
         
         results.append(
             InstrumentalInformation(
@@ -48,6 +37,25 @@ def getAllInstrumentalsAndSets() -> list[InstrumentalInformation]:
         )
     
     return results
+
+def getLyricSets(inst_id: str) -> list[LyricSetInformation]:
+    lyrics_dir = SONG_DIR / inst_id / "lyrics"
+
+    set_summaries = []
+    if lyrics_dir.exists():
+        for set_file in lyrics_dir.glob("set_*.json"):
+            lyric_set = LyricSet(**json.load(open(set_file)))
+            set_summaries.append(
+                LyricSetInformation(
+                    id=lyric_set.id,
+                    created_at=lyric_set.created_at,
+                    last_played=lyric_set.last_played,
+                    title=lyric_set.title
+                )
+            )
+    
+    return set_summaries
+
 
 # retrieve an instrumental from its ID
 def getInstrumental(instrumental_id: str) -> Instrumental:
