@@ -45,7 +45,7 @@ async function loadSongs(rootElement) {
         <div class="inst-btn-date">Last Played: ${formatDate(instrumental.last_played)}</div>
       </div>
     `;
-    instBtn.onclick = () => navigateTo({page:"instrumental", data:{ instId: instrumental.id }, title:instrumental.title, pushHistory:false});
+    instBtn.onclick = () => navigateTo({page:"instrumental", data:{ instId: instrumental.id }, title:instrumental.title});
     el.appendChild(instBtn);
 
     // if (instrumental.lyricSets.length == 0){

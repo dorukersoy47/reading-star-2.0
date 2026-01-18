@@ -38,12 +38,7 @@ def getInstrumentalAudio(inst_id: str):
     if not audio_path.exists():
         raise HTTPException(status_code=404, detail="audio not found")
     
-    return FileResponse(
-        audio_path,
-        media_type="audio/wav",
-        filename="instrumental.wav"
-    )
-
+    return FileResponse(audio_path, media_type="audio/wav", filename="instrumental.wav")
 
 
 "POST"
@@ -51,7 +46,7 @@ def getInstrumentalAudio(inst_id: str):
 @router.post("/", response_model=Instrumental)
 def createInstrumental(req: InstrumentalPrompt):
     inst_id = storage.createInstrumentalDirectory()
-    instrumental = generateMusic(req, storage.getInstrumentalDirectory(inst_id))
+    instrumental = generateMusic(req, storage.getInstDir(inst_id))
     return storage.storeInstrumental(inst_id, instrumental, f"/instrumentals/{inst_id}/audio")
 
 # generate and store a new lyric set
