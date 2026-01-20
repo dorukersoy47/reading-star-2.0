@@ -130,18 +130,27 @@ def updateInstrumental(instrumental: Instrumental) -> None:
     pass
 
 # update a lyric set within an instrumental
-def updateLyricSet(instrumental_id: str, lyric_set: LyricSet) -> None:
+def updateLyricSet(inst_id: str, lyric_set: LyricSet) -> None:
     pass
 
 
 "DELETE"
-# delete an instrumental from its ID
-def deleteInstrumental(instrumental_id: str) -> None:
-    pass
+# delete an instrumental an all associated files from its ID
+def deleteInstrumental(inst_id: str) -> None:
+    lyrics_dir = _getLyricsDir(inst_id)
+    for set_file in lyrics_dir.glob("set_*.json"):
+        set_file.unlink()
+    lyrics_dir.rmdir()
+
+    _getInstFile(inst_id).unlink()
+    getInstrumentalAudioPath(inst_id).unlink()
+    getInstDir(inst_id).rmdir()
+
 
 # delete a lyric set from its and its instrumental's ID
-def deleteLyricSet(instrumental_id: str, set_id: str) -> None:
-    pass
+def deleteLyricSet(inst_id: str, set_id: str) -> None:
+    set_file = _getLyricSetFile(inst_id, set_id)
+    set_file.unlink()
 
 
 "HELPERS"
@@ -177,14 +186,18 @@ def createInstrumentalDirectory() -> str:
 def getInstDir(inst_id: str) -> Path:
     return SONG_DIR / inst_id
 
+# get the instrumental file for an instrumental with its id
 def _getInstFile(inst_id: str) -> Path:
     return SONG_DIR / inst_id / "instrumental.json"
 
+# get the directory of the lyrics of an instrumental with its id
 def _getLyricsDir(inst_id: str) -> Path:
     return SONG_DIR / inst_id / "lyrics"
 
+# get the lyric set of an instrumental with their ids
 def _getLyricSetFile(inst_id: str, set_id: str) -> Path:
     return _getLyricsDir(inst_id) / f"{set_id}.json"
 
+# get the audio file for an instrumental with its id
 def getInstrumentalAudioPath(inst_id: str) -> Path:
     return getInstDir(inst_id) / "instrumental.wav"

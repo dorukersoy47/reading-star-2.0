@@ -11,7 +11,7 @@ router = APIRouter()
 
 "GET"
 # get information of every instrumental and their lyric sets
-@router.get("/", response_model=list[InstrumentalInformation])
+@router.get("", response_model=list[InstrumentalInformation])
 def getAll():
     return storage.getAllInstrumentalsAndSets()
 
@@ -54,3 +54,14 @@ def createInstrumental(req: InstrumentalPrompt):
 def createLyricSet(inst_id: str, req: LyricsPrompt):
     lyric_set = generateLyrics(req)
     return storage.storeLyricSet(inst_id, lyric_set)
+
+"DELETE"
+# delete an instrumental and all associated files from its ID
+@router.delete("/{inst_id}", status_code=204)
+def deleteInstrumental(inst_id: str):
+    storage.deleteInstrumental(inst_id)
+
+# delete a lyric set from its and its instrumental's ID
+@router.delete("/{inst_id}/lyrics/{set_id}", status_code=204)
+def deleteLyricSet(inst_id: str, set_id: str):
+    storage.deleteLyricSet(inst_id, set_id)

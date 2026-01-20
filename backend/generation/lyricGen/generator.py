@@ -53,7 +53,7 @@ def generate_title(topic: str) -> str:
         },
         {
             "role": "user",
-            "content": f"""Suggest a short (2-4 words), creative, and engaging title for a children's song about "{topic}"."""
+            "content": f"""Suggest a short (2-4 words), creative, and engaging title for a children's song about "{topic}". You should output one title and only the title"""
         },
     ]
 
