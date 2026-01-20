@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron/main')
 const path = require('node:path')
+const { dialog } = require('electron')
 
 const API_BASE_URL = 'http://127.0.0.1:8000/instrumentals';
 
@@ -23,7 +24,7 @@ ipcMain.handle('getInstrumental', async (_, instId) => {
 });
 
 // get all lyric sets of an instrumental
-ipcMain.handle('getLyricSets', async (_, { instId }) => {
+ipcMain.handle('getLyricSets', async (_, instId) => {
     const response = await fetch(`${API_BASE_URL}/${instId}/lyrics`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -61,6 +62,22 @@ ipcMain.handle('createLyricSet', async (_, { instId, topic, stanza_count, syllab
     });
     return await response.json();
 })
+
+
+/* DELETE */
+// delete an instrumental
+ipcMain.handle('deleteInstrumental', async (_, instId) => {
+    const response = await fetch(`${API_BASE_URL}/${instId}`, { method: 'DELETE' });
+    if (!response.ok) { throw new Error(`Failed to delete instrumental: ${response.status}`); }
+    return true;
+});
+
+// delete a lyric set
+ipcMain.handle('deleteLyricSet', async (_, { instId, setId }) => {
+    const response = await fetch(`${API_BASE_URL}/${instId}/lyrics/${setId}`, { method: 'DELETE' });
+    if (!response.ok) { throw new Error(`Failed to delete lyric set: ${response.status}`); }
+    return true;
+});
 
 
 const createWindow = () => {
