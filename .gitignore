@@ -10,6 +10,9 @@ lyric-generation/__pycache__/
 # vscode settings
 .vscode/
 
+# idea settings
+.idea/
+
 # Logs
 logs
 *.log
@@ -153,4 +156,3 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 *.wav
-.idea*
