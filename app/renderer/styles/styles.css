@@ -370,3 +370,66 @@ form .button {
   margin: 0 auto;
 }
 @keyframes spin {to{transform: rotate(1turn)}}
+
+.blur-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 1.2rem;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.confirmation-box h2 {
+  margin-top: 0;
+}
+
+.confirmation-box p {
+  font-size: 1.2rem;
+}
+
+.confirmation-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.danger-button {
+  background-color: var(--danger);
+}
+
+.danger-button:hover {
+  background-color: var(--danger-hover);
+}
+
+.cancel-button {
+  background-color: var(--cancel);
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: var(--cancel-hover);
+}
+
+.delete-button {
+  margin-top: .6rem;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.delete-button svg {
+  width: 4.5rem;
+}

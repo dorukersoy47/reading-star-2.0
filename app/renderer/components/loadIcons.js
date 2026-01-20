@@ -1,16 +1,18 @@
 export const icons = new Map();
 
 export async function loadIcons() {
-  const names = ["arrow-left", "circle-question-mark", "settings", "x", "play", "pause", "restart"];
+  const names = ["arrow-left", "circle-question-mark", "settings", "x", "play", "pause", "restart", "delete"];
   await Promise.all(names.map(async name => {
     const path = `assets/icons/${name}.svg`;
     try {
       let txt = await fetch(path).then(r => r.text());
+      console.log(name, txt)
       txt = txt.replace(/\s(width|height)="[^"]*"/g, "");
-      txt = txt.replace(/\sstroke="[^"]*"/g, ' stroke="currentColor"');
+      txt = txt.replace(/\sstroke="[^"]*"/g, 'stroke="currentColor"');
       txt = txt.replace("<svg", '<svg class="icon" stroke-width="2.5"');
-      if (name == "play" || name == "pause"){
-        txt = txt.replace(/\sfill="[^"]*"/g, ' fill="currentColor"');
+      if (name == "play" || name == "pause" || name=="delete"){
+        txt = txt.replace(/\sfill="[^"]*"/g, "");
+        txt = txt.replace("<svg", '<svg fill="currentColor"')
       };
       icons.set(name, txt);
     } catch (e) {

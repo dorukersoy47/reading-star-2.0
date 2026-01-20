@@ -1,6 +1,7 @@
-import { navigateTo } from "../router.js";
+import { navigateTo, goBack } from "../router.js";
 import { getIcon } from "../components/loadIcons.js";
 import { formatDate } from "../components/utility.js";
+import { confirm } from "../components/confirm.js";
 
 export let title = "Instrumental Page";
 
@@ -25,6 +26,7 @@ export function Render(data) {
           <div class="display-date" id="created"></div>
           <div class="display-date" id="played"></div>
         </div>
+        <button class="header-button header-button-x delete-button" id="delete"></button>
       </div>
     `;
 
@@ -54,6 +56,17 @@ export function Render(data) {
       audio.currentTime = 0;
       // audio.play();
       // playBtn.innerHTML = getIcon("pause");
+    };
+    
+    const deleteBtn = document.getElementById("delete");
+    deleteBtn.innerHTML = getIcon("delete");
+    deleteBtn.onclick = async () => {
+      const confirmed = await confirm(`Are you sure you want to delete the "${instrumentalData.title}" instrumental?`, 'This cannot be undone.');
+
+      if (!confirmed) return;
+
+      await window.backendAPI.deleteInstrumental(instrumentalData.id);
+      goBack();
     };
 
     const setContainer = document.getElementById("lyric-sets");
