@@ -3,6 +3,7 @@ from typing import List
 
 class InstrumentalPrompt(BaseModel):
     genre: str
+    keywords: str
 
 class LyricsPrompt(BaseModel):
     topic: str

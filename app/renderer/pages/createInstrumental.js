@@ -35,10 +35,11 @@ export function Render() {
 
   el.querySelector("#generate").onclick = async () => {
     const genre = document.getElementById('genre').value;
+    const keywords = document.getElementById('prompt').value;
     try {
       showLoadingScreen();
 
-      const result = await window.backendAPI.createInstrumental(genre);
+      const result = await window.backendAPI.createInstrumental(genre, keywords);
 
       navigateTo({ page: "instrumental", pushHistory: false, data: { instId: result.id }, title: result.title });
     } catch (error) {
