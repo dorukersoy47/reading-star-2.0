@@ -54,11 +54,11 @@ ipcMain.handle('createInstrumental', async (_, { genre, keywords }) => {
 })
 
 // create a new lyrics set
-ipcMain.handle('createLyricSet', async (_, { instId, topic, stanza_count, syllable_count }) => {
+ipcMain.handle('createLyricSet', async (_, { instId, topic, keywords, song_length, line_length, complexity }) => {
     const response = await fetch(`${API_BASE_URL}/${instId}/lyrics`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic, stanza_count, syllable_count })
+        body: JSON.stringify({ topic, keywords, song_length, line_length, complexity })
     });
     return await response.json();
 })
