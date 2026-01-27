@@ -9,7 +9,7 @@ export function Render(data) {
   
   el.innerHTML = `
     <div class="creation-form">
-      <input id="prompt" class="prompt-box" type="text" placeholder="Describe a short topic for your lyrics...">
+      <input id="prompt" maxlength="50" class="prompt-box" type="text" placeholder="Describe a short topic for your lyrics...">
       <input id="keywords" class="prompt-box" type="text" placeholder="Keywords to include (comma-separated)...">
       <div class="creation-settings">
         <div class="creation-setting">
@@ -47,6 +47,13 @@ export function Render(data) {
     const song_length = document.getElementById("song-length").value;
     const line_length = document.getElementById("line-length").value;
     const complexity = document.getElementById("complexity").value;
+
+    // const keywordPattern = /^[a-zA-Z]*(\s*,\s*[a-zA-Z]+)*$/;
+    // if (keywords && !keywordPattern.test(keywords)) {
+    //   console.error("Invalid keyword format");
+    //   document.getElementById("keywords").focus();
+    //   return;
+    // }
 
     try {
       showLoadingScreen();
