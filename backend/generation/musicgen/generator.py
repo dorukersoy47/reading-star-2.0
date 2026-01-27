@@ -8,6 +8,7 @@ from transformers import MusicgenForConditionalGeneration, AutoProcessor
 # Local imports
 from generation.config import MUSIC_MAX_TOKENS, GENRES
 from .audio_util import extend_audio
+from models.generation import InstrumentalPrompt
 
 # Path to the locally downloaded model
 LOCAL_MODEL_PATH = Path(__file__).parent.parent / "ai_models" / "music_model"
@@ -17,18 +18,19 @@ processor = AutoProcessor.from_pretrained(LOCAL_MODEL_PATH)
 model = MusicgenForConditionalGeneration.from_pretrained(LOCAL_MODEL_PATH)
 
 
-def generate_music(genre, output_folder: Path = None):
-    if genre not in GENRES:
+def generate_music(prompt: InstrumentalPrompt, output_folder: Path = None):
+    if prompt.genre not in GENRES:
         raise ValueError(f"Genre must be one of: {list(GENRES.keys())}")
 
-    config = GENRES[genre]
-    print(f"\nGenerating {genre.replace('_', ' ')}...")
-    print(f"Prompt: {config['prompt']}")
+    config = GENRES[prompt.genre]
+    text = f"{config["prompt"]}. It should be {prompt.keywords}."
+    print(f"\nGenerating {prompt.genre.replace('_', ' ')}...")
+    print(f"Prompt: {text}")
     print("Generating base audio... (this will take a few minutes)\n")
 
     # Prepare inputs using the processor
     inputs = processor(
-        text=[config["prompt"]],
+        text=[text],
         padding=True,
         return_tensors="pt"
     )

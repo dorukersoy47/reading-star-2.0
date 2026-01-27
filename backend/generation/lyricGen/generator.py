@@ -53,7 +53,25 @@ def generate_title(topic: str) -> str:
         },
         {
             "role": "user",
-            "content": f"""Suggest a short (2-4 words), creative, and engaging title for a children's song about "{topic}"."""
+            "content": f"""Suggest a short (2-4 words), creative, and engaging title for a children's song about "{topic}". You should output one title and only the title."""
+        },
+    ]
+
+    title = generate_text(chat, max_tokens=10)
+    title = re.sub(r'[^\w\s]', '', title).strip()
+    return title.strip()
+
+def generate_instrumental_title(genre: str, keywords: str) -> str:
+    chat = [
+        {
+            "role": "system",
+            "content": "You are a creative assistant that writes simple, child-friendly instrumental music titles. Output only the raw title, no labels or annotations."
+        },
+        {
+            "role": "user",
+            "content": f"""Suggest a short title for a backing track. 
+                The track is in the "{genre}" genre of and evokes the following qualities: {keywords}. 
+                Choose a single descriptive keyword based on "{keywords}" and output the title in the format: "<Keyword> <Genre>" and no other words. You should output one title and only the title."""
         },
     ]
 

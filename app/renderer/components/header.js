@@ -1,7 +1,7 @@
 import { goBack, navigateTo } from "../router.js";
 import { getIcon } from "./loadIcons.js";
 
-const makeIconBtn = (id, name, onClick) => {
+export function makeIconBtn(id, name, onClick) {
   const b = document.createElement("button");
   b.id = id;
   b.className = "header-button";

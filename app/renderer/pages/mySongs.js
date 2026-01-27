@@ -1,4 +1,5 @@
 import { navigateTo } from "../router.js";
+import { formatDate } from "../components/utility.js"
 
 export const title = "My Songs";
 
@@ -14,14 +15,6 @@ export function Render() {
 
   return el;
 }
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const day = String(date.getDate());
-  const month = String(date.getMonth() + 1);
-  const year = date.getFullYear();
-  return `${day}.${month}.${year}`;
-};
 
 async function loadSongs(rootElement) {
   const container = rootElement.querySelector("#songList");
@@ -55,6 +48,12 @@ async function loadSongs(rootElement) {
     instBtn.onclick = () => navigateTo({page:"instrumental", data:{ instId: instrumental.id }, title:instrumental.title});
     el.appendChild(instBtn);
 
+    // if (instrumental.lyricSets.length == 0){
+    //   const noSets = document.createElement("div");
+    //   noSets.innerHTML = `<p class="lyric-btn-title" style="font-size: 1.2rem">No lyric sets yet.</p>`;
+    //   el.appendChild(noSets);
+    // }
+
     for (const set of instrumental.lyricSets) {
       const setbtn = document.createElement("button");
       setbtn.className = "button lyric-button";
@@ -63,7 +62,12 @@ async function loadSongs(rootElement) {
           <div class="lyric-btn-title">${set.title}</div>
           <div class="lyric-btn-subtitle">Lyric Set</div>
         </div>
+        <div class="inst-btn-dates">
+        </div>
       `
+      // <div class="lyric-btn-date">Created: ${formatDate(set.created_at)}</div>
+      // <div class="lyric-btn-date">Last Played: ${formatDate(set.last_played)}</div>
+      
       setbtn.onclick = () => navigateTo({page:"lyricSet", data:{ instId: instrumental.id, setId: set.id }, title:set.title});
       el.appendChild(setbtn);
     }

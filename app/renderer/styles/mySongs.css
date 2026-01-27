@@ -1,5 +1,5 @@
 .my-songs-page {
-  padding: 2rem;
+  padding: 1rem 4rem 2rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -73,18 +73,38 @@
   line-height: 1.3;
 }
 
+.lyric-btn-date {
+  text-align: right;
+  font-size: 1rem;
+  color: var(--title);
+  line-height: 1.3;
+}
+
 .instrumental-button:hover {
   background: var(--button-hover);
   transform: translateY(-2px);
 }
 
 .lyric-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   padding: 1rem;
   background: var(--background);
   border-radius: 0.5rem;
   margin-left: 1.5rem;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.lyric-button:hover {
+  background: white;
+  color: var(--button-text);
+  transform: translateY(-2px);
+}
+.instrumental-page-lyric-button {
+  margin-left: 0;
 }
 
 .lyric-btn-left {
@@ -105,10 +125,4 @@
   text-align: left;
   font-size: 1.1rem;
   color: var(--text-secondary);
-}
-
-.lyric-button:hover {
-  background: var(--button-hover);
-  color: var(--button-text);
-  transform: translateY(-2px);
 }

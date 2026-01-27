@@ -13,12 +13,19 @@
   --button-text: #F8F8F8;
   --button-secondary-text: #f8f8f8e4;
   --button-visible: #FFD966;
+  --white-button-hover: #E0E0E0;
 
   --header-button-hover: #00000013;
 
   --back-hover: #E0E0E0;
 
-  --red: #df3232;
+  --red: #cc2323;
+
+  --danger: #C23B3B;
+  --danger-hover: #D44A4A;
+
+  --cancel: #8E8F97;
+  --cancel-hover: #A1A2AA;
 
   --transparent-bg: rgba(0, 0, 0, 0.05);
   --transparent-bg-shadow: rgba(0, 0, 0, 0.05);
