@@ -13,7 +13,7 @@ The application aims to foster reading, rhythm, and engagement through interacti
 - **Electron** – Desktop UI framework for a modern and accessible user experience  
 - **FastAPI** – Backend API serving model requests and managing audio/text data  
 - **Python** – Core logic for text generation, audio processing, and lyric alignment  
-- **Nuitka** – Compiles Python code into C-based executables for performance and Windows distribution (.exe)
+- (soon)**Nuitka** – Compiles Python code into C-based executables for performance and Windows distribution (.exe)
 
 ## 🧠 Key Features
 - Upload or generate custom karaoke tracks from text prompts  
