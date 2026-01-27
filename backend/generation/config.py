@@ -1,5 +1,5 @@
 # Lyric generation
-LYRIC_MODEL_PATH = "ibm-granite/granite-3.0-8b-instruct"
+LYRIC_MODEL_PATH = "ibm-granite/granite-3.0-2b-instruct"
 LYRIC_MAX_TOKENS = 75
 TITLE_MAX_TOKENS = 10
 TEMPERATURE = 0.7
