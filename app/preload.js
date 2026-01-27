@@ -22,7 +22,7 @@ contextBridge.exposeInMainWorld('backendAPI', {
   getLyricSets: (instId) => ipcRenderer.invoke('getLyricSets', instId),
   getLyricSet: (instId, setId) => ipcRenderer.invoke('getLyricSet', { instId, setId }),
   createInstrumental: (genre, keywords) => ipcRenderer.invoke('createInstrumental', { genre, keywords }),
-  createLyricSet: (instId, topic, stanza_count, syllable_count) => ipcRenderer.invoke('createLyricSet', { instId, topic, stanza_count, syllable_count }),
+  createLyricSet: (instId, topic, keywords, song_length, line_length, complexity) => ipcRenderer.invoke('createLyricSet', { instId, topic, keywords, song_length, line_length, complexity }),
   deleteInstrumental: (instId) => ipcRenderer.invoke('deleteInstrumental', instId),
   deleteLyricSet: (instId, setId) => ipcRenderer.invoke('deleteLyricSet', { instId, setId }),
   convertAudioURL

@@ -1,90 +1,98 @@
 import random
+from typing import List
 import pyphen
 
 FILLER_WORDS = ["Oh", "Ah", "Hey", "Yeah", "Ooh", "Hmm", "Whoa", "Yay", "Woo"]
 
-def line_to_syllable_array(line: str) -> list[list[str]]:
-    
-    def split_word_into_syllables(word: str) -> list[str]:
-        _hyphenator = pyphen.Pyphen(lang='en_US')
+def split_word(word: str) -> List[str]:
+    hyphenator = pyphen.Pyphen(lang='en_GB')
 
-        clean = ''.join(c for c in word.lower() if c.isalpha())
-        
-        if not clean:
-            return []
-        
-        hyphenated = _hyphenator.inserted(clean)
-        syllables = hyphenated.split('-')
-        
-        if len(syllables) == 1:
-            return [word]
-        
-        result = []
-        pos = 0
-        for syl in syllables:
-            syl_len = len(syl)
-            original_part = word[pos:pos + syl_len]
-            result.append(original_part)
-            pos += syl_len
-        
-        return result if result else [word]
+    clean = ''.join(c for c in word.lower() if c.isalpha())
+
+    if not clean:
+        return []
     
+    hyphenated = hyphenator.inserted(clean)
+    syllables = hyphenated.split('-')
+
+    return syllables
+
+
+def line_to_array(line: str) -> List[List[str]]:
     words = line.split()
-    return [split_word_into_syllables(word) for word in words]
+    return [split_word(word) for word in words]
 
 
-def count_total_syllables(syllable_array: list[list[str]]) -> int:
-    return sum(len(word_syllables) for word_syllables in syllable_array)
+def count_syllables(line: List[List[str]]):
+    return sum(len(syllable) for syllable in line)
 
 
-def add_fillers(syllable_array: list[list[str]], needed: int) -> list[list[str]]:
+def add_fillers(line: List[List[str]], needed: int) -> List[List[str]]:
     fillers = [[random.choice(FILLER_WORDS)] for _ in range(needed)]
-    return fillers + syllable_array
+    return fillers + line 
 
 
-def combine_syllables(syllable_array: list[list[str]], excess: int) -> list[list[str]]:
+def combine_syllables(line: List[List[str]], excess: int) -> List[List[str]]:
     if excess <= 0:
-        return syllable_array
+        return line
     
-    multi_syllable_indices = []
-    for i, word_syllables in enumerate(syllable_array):
-        if len(word_syllables) >= 2:
-            multi_syllable_indices.append((i, len(word_syllables)))
-    
-    multi_syllable_indices.sort(key=lambda x: x[1])
-    
-    result = [list(word) for word in syllable_array]  # Deep copy
-    reductions_made = 0
-    
-    for word_idx, _ in multi_syllable_indices:
-        if reductions_made >= excess:
-            break
+    result = [list(word) for word in line]
+    reductions = 0
+
+    while reductions < excess:
+        max_idx = -1
+        max_len = 1
+        min_idx = 0
+        min_len = float('inf')
+
+        for i, word in enumerate(result):
+            if len(word) > max_len:
+                max_len = len(word)
+                max_idx = i
+            
+            if len(word[0]) < min_len:
+                min_len = len(word[0])
+                min_idx = i
         
-        word_syllables = result[word_idx]
-        
-        while len(word_syllables) >= 2 and reductions_made < excess:
-            word_syllables[0] = word_syllables[0] + word_syllables[1]
-            word_syllables.pop(1)
-            reductions_made += 1
-        
-        result[word_idx] = word_syllables
+        if max_idx != -1:
+            result[max_idx][0] = result[max_idx][0] + result[max_idx][1]
+            result[max_idx].pop(1)
+            reductions += 1
+        else:
+            if len(result) < 2:
+                break
+            
+            if min_idx < len(result) - 1:
+                result[min_idx] = [result[min_idx][0] + " " + result[min_idx + 1][0]]
+                result.pop(min_idx + 1)
+            else:
+                result[min_idx - 1] = [result[min_idx - 1][0] + " " + result[min_idx][0]]
+                result.pop(min_idx)
+            
+            reductions += 1
+
+    return result
+
+
+def normalise_line(line: str, target_syllables: int) -> List[List[str]]:
+    array = line_to_array(line)
+    current = count_syllables(array)
+    
+    if current == target_syllables:
+        result = array
+    elif current < target_syllables:
+        needed = target_syllables - current
+        result = add_fillers(array, needed)
+    else:
+        excess = current - target_syllables
+        result = combine_syllables(array, excess)
+    
+    if result and result[0]:
+        result[0][0] = result[0][0].capitalize()
     
     return result
 
 
-def normalise_line(line: str, target_syllables: int) -> list[list[str]]:
-    syllable_array = line_to_syllable_array(line)
-    current_syllables = count_total_syllables(syllable_array)
-    
-    if current_syllables == target_syllables:
-        return syllable_array
-    elif current_syllables < target_syllables:
-        needed = target_syllables - current_syllables
-        return add_fillers(syllable_array, needed)
-    else:
-        excess = current_syllables - target_syllables
-        return combine_syllables(syllable_array, excess)
 
-
-def normalise_song(lines: list[str], target_syllables: int) -> list[list[list[str]]]:
-    return [normalise_line(line, target_syllables) for line in lines]
+def normalise_song(song: list[str], target_syllables: int) -> list[list[list[str]]]:
+    return [normalise_line(line, target_syllables) for line in song]

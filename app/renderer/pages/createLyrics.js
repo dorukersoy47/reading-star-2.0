@@ -1,6 +1,5 @@
 import { navigateTo } from "../router.js";
 import { showLoadingScreen, hideLoadingScreen } from "../components/loading.js";
-import { lengthToStanzaCount, complexityToSyllableCount } from "../components/utility.js";
 
 export const title = "Create the Lyrics!";
 
@@ -9,14 +8,21 @@ export function Render(data) {
   el.className = "create-lyrics-page";
   
   el.innerHTML = `
-    <form>
-      <div class="prompt-text">
-        <textarea id="prompt" class="prompt-box" name="prompt" placeholder="Describe the topic for your lyrics..."></textarea>
-      </div>
+    <div class="creation-form">
+      <input id="prompt" class="prompt-box" type="text" placeholder="Describe a short topic for your lyrics...">
+      <input id="keywords" class="prompt-box" type="text" placeholder="Keywords to include (comma-separated)...">
       <div class="creation-settings">
         <div class="creation-setting">
-          <label for="length">Length</label>
-          <select id="length">
+          <label for="song-length">Song Length</label>
+          <select id="song-length">
+            <option value="short">Short</option>
+            <option value="medium">Medium</option>
+            <option value="long">Long</option>
+          </select>
+        </div>
+        <div class="creation-setting">
+          <label for="line-length">Line Length</label>
+          <select id="line-length">
             <option value="short">Short</option>
             <option value="medium">Medium</option>
             <option value="long">Long</option>
@@ -26,26 +32,25 @@ export function Render(data) {
           <label for="complexity">Complexity</label>
           <select id="complexity">
             <option value="simple">Simple</option>
-            <option value="medium">Medium</option>
+            <option value="moderate">Moderate</option>
             <option value="complex">Complex</option>
           </select>
         </div>
       </div>
       <button type="button" class="button" id="generate">Generate</button>
-    </form>
+    </div>
   `;
 
   el.querySelector("#generate").onclick = async () => {
     const topic = document.getElementById("prompt").value;
-    const length = document.getElementById("length").value;
+    const keywords = document.getElementById("keywords").value;
+    const song_length = document.getElementById("song-length").value;
+    const line_length = document.getElementById("line-length").value;
     const complexity = document.getElementById("complexity").value;
-
-    const stanza_count = lengthToStanzaCount(length);
-    const syllable_count = complexityToSyllableCount(complexity)
 
     try {
       showLoadingScreen();
-      const result = await window.backendAPI.createLyricSet(data.instId, topic, stanza_count, syllable_count);
+      const result = await window.backendAPI.createLyricSet(data.instId, topic, keywords, song_length, line_length, complexity);
       navigateTo({ page: "lyricSet", pushHistory: false, data: { instId: data.instId, setId: result.id }, title: result.title });
     } catch (error) {
       console.error("Error generating lyrics:", error);

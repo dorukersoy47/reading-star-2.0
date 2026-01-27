@@ -1,80 +1,83 @@
-from generation.config import LINE_COUNT, SEQUENCE
 from generation.lyricGen.model import generate_text
+from generation.config import TITLE_MAX_TOKENS
 import re
+from typing import List, Optional
 
+ROLE_DESCRIPTION = "You are a special education teacher that writes simple, child-friendly song lyrics for autistic children."
 
-def generate_stanza(topic: str, syllable_count: int, line_count: int = LINE_COUNT,
-                    sequence: str = SEQUENCE) -> str:    
+def generate_couplet(topic: str, keyword: Optional[str], syllable_count: int, complexity: str) -> str:    
     chat = [
         {
             "role": "system",
-            "content": "You are a creative assistant that writes simple, child-friendly song lyrics. Output only the raw lyrics, no labels or annotations."
+            "content": ROLE_DESCRIPTION
         },
         {
             "role": "user",
-            "content": f"""Write a {line_count}-line verse of a children's song about "{topic}".
-
-Rules:
-- Follow the {sequence} rhyme scheme (do NOT write the letters, just make the lines rhyme accordingly)
-- Each line should have approximately {syllable_count} syllables
-
-Output ONLY the {line_count} lines of lyrics. No titles, no letter labels like (A) or (B), no explanations."""
-        },
+            "content": (
+                f"Write a rhyming couplet for autistic children about: \"{topic}\".\n"
+                + (f"Keyword: {keyword} (use exactly once total)\n" if keyword else "")
+                + f"Syllables per line: {syllable_count}\n"
+                + f"Complexity: {complexity}\n\n"
+                + "Rules:\n"
+                + "- Exactly 2 lines only\n"
+                + "- Last words must rhyme\n"
+                + "- Simple concrete words, calming and positive\n"
+                + "- No quotes, no extra lines\n"
+                + "Output exactly:\n<couplet>\nLINE1\nLINE2\n</couplet>"
+            )
+        }
     ]
 
     return generate_text(chat)
 
 
-def generate_song(topic, stanza_count: int, syllable_count: int, line_count: int = LINE_COUNT, sequence: str = SEQUENCE) -> str:
-    stanzas = []
+def generate_song(topic: str, keywords: Optional[List[str]], syllable_count: int, couplet_count: int, complexity: str) -> List[str]:
+    couplets = []
     
-    for i in range(1, stanza_count + 1):
-        print(f"   Generating stanza {i}/{stanza_count}...")
-        
-        stanza = generate_stanza(
+    for i in range(0, couplet_count):
+        print(f"Generating couplet {i + 1}...")
+
+        couplet = generate_couplet(
             topic=topic,
+            keyword= (keywords[i] if i < len(keywords) else None) if keywords else None,
             syllable_count=syllable_count,
-            line_count=line_count,
-            sequence=sequence,
+            complexity=complexity,
         )
         
-        stanza_lines = [ln.strip() for ln in stanza.splitlines() if ln.strip()]
-        stanza = "\n".join(stanza_lines[:line_count])
-        
-        stanzas.append(stanza)
+        couplets.append(couplet)
     
-    return "\n\n".join(stanzas)
+    return couplets
 
 def generate_title(topic: str) -> str:
     chat = [
         {
             "role": "system",
-            "content": "You are a creative assistant that writes simple, child-friendly song titles. Output only the raw title, no labels or annotations."
+            "content": ROLE_DESCRIPTION
         },
         {
             "role": "user",
-            "content": f"""Suggest a short (2-4 words), creative, and engaging title for a children's song about "{topic}". You should output one title and only the title."""
+            "content": f"Suggest a short (2-4 words), creative, and engaging title for a children's song about the topic: \"{topic}\". You should output one title and only the title."
         },
     ]
 
-    title = generate_text(chat, max_tokens=10)
-    title = re.sub(r'[^\w\s]', '', title).strip()
-    return title.strip()
+    title = generate_text(chat, max_tokens=TITLE_MAX_TOKENS)
+    title = re.sub(r'[^\w\s]', '', title).strip().title()
+    return title
 
 def generate_instrumental_title(genre: str, keywords: str) -> str:
     chat = [
         {
             "role": "system",
-            "content": "You are a creative assistant that writes simple, child-friendly instrumental music titles. Output only the raw title, no labels or annotations."
+            "content": ROLE_DESCRIPTION
         },
         {
             "role": "user",
-            "content": f"""Suggest a short title for a backing track. 
-                The track is in the "{genre}" genre of and evokes the following qualities: {keywords}. 
-                Choose a single descriptive keyword based on "{keywords}" and output the title in the format: "<Keyword> <Genre>" and no other words. You should output one title and only the title."""
+            "content": f"Suggest a short title for a backing track. "
+                        + f"The track is in the \"{genre}\" genre of and evokes the following qualities: {keywords}. "
+                        + f"Choose a single descriptive keyword based on \"{keywords}\" and output the title in the format: \"<Keyword> <Genre>\" and no other words. You should output one title and only the title."
         },
     ]
 
-    title = generate_text(chat, max_tokens=10)
-    title = re.sub(r'[^\w\s]', '', title).strip()
-    return title.strip()
+    title = generate_text(chat, max_tokens=TITLE_MAX_TOKENS)
+    title = re.sub(r'[^\w\s]', '', title).strip().title()
+    return title
