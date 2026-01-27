@@ -12,8 +12,8 @@ MUSIC_MODEL_PATH = "facebook/musicgen-small"
 MUSIC_MAX_TOKENS = 1503
 GENRES = {
     "nursery_rhyme": {
-        "prompt": """cheerful children's nursery rhyme, major key, simple melody with piano,
-                    and acoustic guitar, playful and bouncy, 120 BPM""",
+        "prompt": """soothing children's nursery rhyme, major key, simple melody with piano,
+                    and acoustic guitar, playful and calming, 120 BPM""",
         "max_tokens": MUSIC_MAX_TOKENS,
         "target_duration": 120  # 2 minutes
     },
