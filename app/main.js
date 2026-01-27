@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron/main')
 const path = require('node:path')
+const { dialog } = require('electron')
 
 const API_BASE_URL = 'http://127.0.0.1:8000/instrumentals';
 
@@ -22,6 +23,15 @@ ipcMain.handle('getInstrumental', async (_, instId) => {
     return await response.json();
 });
 
+// get all lyric sets of an instrumental
+ipcMain.handle('getLyricSets', async (_, instId) => {
+    const response = await fetch(`${API_BASE_URL}/${instId}/lyrics`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return await response.json();
+});
+
 // get a lyric set from its and its instrumental's ID
 ipcMain.handle('getLyricSet', async (_, { instId, setId }) => {
     const response = await fetch(`${API_BASE_URL}/${instId}/lyrics/${setId}`, {
@@ -34,11 +44,11 @@ ipcMain.handle('getLyricSet', async (_, { instId, setId }) => {
 
 /* POST */
 // create a new instrumental
-ipcMain.handle('createInstrumental', async (_, { genre }) => {
-    const response = await fetch(`${API_BASE_URL}`, {
+ipcMain.handle('createInstrumental', async (_, { genre, keywords }) => {
+    const response = await fetch(`${API_BASE_URL}/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ genre })
+        body: JSON.stringify({ genre, keywords })
     });
     return await response.json();
 })
@@ -52,6 +62,22 @@ ipcMain.handle('createLyricSet', async (_, { instId, topic, stanza_count, syllab
     });
     return await response.json();
 })
+
+
+/* DELETE */
+// delete an instrumental
+ipcMain.handle('deleteInstrumental', async (_, instId) => {
+    const response = await fetch(`${API_BASE_URL}/${instId}`, { method: 'DELETE' });
+    if (!response.ok) { throw new Error(`Failed to delete instrumental: ${response.status}`); }
+    return true;
+});
+
+// delete a lyric set
+ipcMain.handle('deleteLyricSet', async (_, { instId, setId }) => {
+    const response = await fetch(`${API_BASE_URL}/${instId}/lyrics/${setId}`, { method: 'DELETE' });
+    if (!response.ok) { throw new Error(`Failed to delete lyric set: ${response.status}`); }
+    return true;
+});
 
 
 const createWindow = () => {

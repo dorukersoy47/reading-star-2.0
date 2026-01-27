@@ -19,8 +19,11 @@ contextBridge.exposeInMainWorld('versions', {
 contextBridge.exposeInMainWorld('backendAPI', {
   getAll: () => ipcRenderer.invoke('getAll'),
   getInstrumental: (instId) => ipcRenderer.invoke('getInstrumental', instId),
+  getLyricSets: (instId) => ipcRenderer.invoke('getLyricSets', instId),
   getLyricSet: (instId, setId) => ipcRenderer.invoke('getLyricSet', { instId, setId }),
-  createInstrumental: (genre) => ipcRenderer.invoke('createInstrumental', { genre }),
+  createInstrumental: (genre, keywords) => ipcRenderer.invoke('createInstrumental', { genre, keywords }),
   createLyricSet: (instId, topic, stanza_count, syllable_count) => ipcRenderer.invoke('createLyricSet', { instId, topic, stanza_count, syllable_count }),
+  deleteInstrumental: (instId) => ipcRenderer.invoke('deleteInstrumental', instId),
+  deleteLyricSet: (instId, setId) => ipcRenderer.invoke('deleteLyricSet', { instId, setId }),
   convertAudioURL
 });
