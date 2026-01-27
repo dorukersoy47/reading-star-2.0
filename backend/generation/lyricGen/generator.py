@@ -31,7 +31,7 @@ def generate_couplet(topic: str, keyword: Optional[str], syllable_count: int, co
     return generate_text(chat)
 
 
-def generate_song(topic: str, keywords: List[str], syllable_count: int, couplet_count: int, complexity: str) -> List[str]:
+def generate_song(topic: str, keywords: Optional[List[str]], syllable_count: int, couplet_count: int, complexity: str) -> List[str]:
     couplets = []
     
     for i in range(0, couplet_count):
@@ -39,7 +39,7 @@ def generate_song(topic: str, keywords: List[str], syllable_count: int, couplet_
 
         couplet = generate_couplet(
             topic=topic,
-            keyword=keywords[i] if i < len(keywords) else None,
+            keyword= (keywords[i] if i < len(keywords) else None) if keywords else None,
             syllable_count=syllable_count,
             complexity=complexity,
         )

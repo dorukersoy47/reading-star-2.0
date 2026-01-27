@@ -22,7 +22,7 @@ def remove_paranthesis(song: str) -> str:
         ln = re.sub(r"\s*\(.*?\)\s*", " ", ln)
         lines.append(ln.strip())
     return "\n".join(lines)
-    
+
 
 def strip_couplets(couplet: str) -> List[str]:
     match = re.search(r"<couplet[^>]*>(.*?)</couplet>", couplet, flags=re.I | re.S)
@@ -31,6 +31,7 @@ def strip_couplets(couplet: str) -> List[str]:
     inner = match.group(1)
     lines = [line.strip() for line in inner.split("\n") if line.strip()]
     return lines[:2]
+
 
 def clean_couplet(couplet: str) -> List[str]:
     clean = strip_couplets(couplet)

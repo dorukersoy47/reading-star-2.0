@@ -79,13 +79,19 @@ def normalise_line(line: str, target_syllables: int) -> List[List[str]]:
     current = count_syllables(array)
     
     if current == target_syllables:
-        return array
+        result = array
     elif current < target_syllables:
         needed = target_syllables - current
-        return add_fillers(array, needed)
+        result = add_fillers(array, needed)
     else:
         excess = current - target_syllables
-        return combine_syllables(array, excess)
+        result = combine_syllables(array, excess)
+    
+    if result and result[0]:
+        result[0][0] = result[0][0].capitalize()
+    
+    return result
+
 
 
 def normalise_song(song: list[str], target_syllables: int) -> list[list[list[str]]]:
