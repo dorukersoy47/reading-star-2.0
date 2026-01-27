@@ -4,8 +4,7 @@ LYRIC_MAX_TOKENS = 100
 TITLE_MAX_TOKENS = 20
 TEMPERATURE = 0.7
 TOP_P = 0.9
-LINE_COUNT = 4
-SEQUENCE = "AABB"
+LINE_COUNT = 2
 
 # Music generation
 MUSIC_MODEL_PATH = "facebook/musicgen-small"

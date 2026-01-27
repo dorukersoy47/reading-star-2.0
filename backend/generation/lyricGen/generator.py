@@ -8,7 +8,7 @@ def generate_stanza(topic: str, syllable_count: int, line_count: int = LINE_COUN
     chat = [
         {
             "role": "system",
-            "content": "You are a creative assistant that writes simple, child-friendly song lyrics. Output only the raw lyrics, no labels or annotations."
+            "content": "You are a special education teacher that writes simple, child-friendly song lyrics for autistic children."
         },
         {
             "role": "user",
