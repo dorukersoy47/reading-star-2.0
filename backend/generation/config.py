@@ -1,9 +1,9 @@
 # Lyric generation
 LYRIC_MODEL_PATH = "ibm-granite/granite-3.0-2b-instruct"
-LYRIC_MAX_TOKENS = 75
+LYRIC_MAX_TOKENS = 65
 TITLE_MAX_TOKENS = 10
 TEMPERATURE = 0.7
-TOP_P = 0.85
+TOP_P = 0.9
 
 # Music generation
 MUSIC_MODEL_PATH = "facebook/musicgen-small"

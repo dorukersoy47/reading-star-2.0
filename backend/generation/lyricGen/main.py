@@ -10,27 +10,19 @@ def main(prompt : LyricsPrompt) -> GeneratedLyrics:
     couplet_count = {"short": 2, "medium": 4, "long": 6}[prompt.song_length]
     complexity = prompt.complexity
 
+    print("Generating title...")
     title = generate_title(topic)
+    print("Generating lyrics...")
     song = generate_song(topic, keywords, syllable_count, couplet_count, complexity)
-    # song = format_song(song)
-    # song = normalise_song(song, target_syllables=prompt.syllable_count)
-
-    print(title + "\n")
-    for couplet in song:
-        print(couplet)
+    print("Formatting lyrics...")
+    song = format_song(song)
+    print("Normalising lyrics...")
+    song = normalise_song(song, syllable_count)
     
+    print("Successfully generated lyrics.")
+
     return GeneratedLyrics(
         title=title,
         prompt=prompt,
         lyrics=song
     )
-
-if __name__ == "__main__":
-    sample_prompt = LyricsPrompt(
-        topic="A Journey Through Time",
-        keywords="adventure, history",
-        line_length="medium",
-        song_length="short",
-        complexity="simple"
-    )
-    main(sample_prompt)

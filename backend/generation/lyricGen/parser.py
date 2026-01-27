@@ -2,62 +2,52 @@ import re
 from typing import List
 
 def remove_headings(song: str) -> str:
+    heading_re = re.compile(r"^\s*\[?\s*(verse|chorus|bridge|refrain|stanza)\s*\]?\s*$", flags=re.I)
     lines = song.splitlines()
-    heading_re = re.compile(r"^\s*(?:\(?\s*(?:verse|chorus|bridge|refrain|stanza)\b.*\)?)\s*$", re.I)
-    filtered = [ln for ln in lines if not heading_re.match(ln)]
-    return "\n".join(filtered)
-
-
-def remove_empty_lines(song: str) -> str:
-    lines = song.splitlines()
-    filtered = [ln for ln in lines if ln.strip()]
-    return "\n".join(filtered)
+    kept = [ln for ln in lines if not heading_re.match(ln.strip())]
+    return "\n".join(kept)
 
 
 def remove_numbering(song: str) -> str:
-    lines = song.splitlines()
-    cleaned = []
-    for ln in lines:
-        cleaned_line = re.sub(r"^\s*[\d]+[.\):\-]\s*", "", ln)
-        cleaned_line = re.sub(r"^\s*[\-\*]\s*", "", cleaned_line)
-        cleaned.append(cleaned_line)
-    return "\n".join(cleaned)
+    lines = []
+    for ln in song.splitlines():
+        ln = re.sub(r"^\s*\d+\s*[.)-]\s*", "", ln) 
+        ln = re.sub(r"^\s*[\-\*]\s*", "", ln)
+        lines.append(ln.strip())
+    return "\n".join(lines)
 
 def remove_paranthesis(song: str) -> str:
-    lines = song.splitlines()
-    cleaned = []
-    for ln in lines:
-        cleaned_line = re.sub(r"\s*\(.*?\)\s*", "", ln)
-        cleaned.append(cleaned_line)
-    return "\n".join(cleaned)
-
-def crop_to_expected_lines(song: str, stanza_count: int) -> str:
-    lines = [ln for ln in song.splitlines() if ln.strip()]
-    expected_total = stanza_count * line_count
-    cropped = lines[:expected_total]
-    return "\n".join(cropped)
-
-
-def parse_to_lines(song: str) -> list[str]:
-    return [ln.strip() for ln in song.splitlines() if ln.strip()]
-
-def clean_couplet(couplet: str) -> str:
-    lines
-
-
-def format_song(raw_song: List[str]) -> str:
-    song = ""
-
-    for i in range(len(song)):
-        couplet = song[i]
-        couplet = clean_couplet(couplet)
-        song[i] = "\n".join(couplet)
-    
+    lines = []
+    for ln in song.splitlines():
+        ln = re.sub(r"\s*\(.*?\)\s*", " ", ln)
+        lines.append(ln.strip())
+    return "\n".join(lines)
     
 
+def strip_couplets(couplet: str) -> List[str]:
+    match = re.search(r"<couplet[^>]*>(.*?)</couplet>", couplet, flags=re.I | re.S)
+    if not match:
+        return []
+    inner = match.group(1)
+    lines = [line.strip() for line in inner.split("\n") if line.strip()]
+    return lines[:2]
 
-    song = remove_headings(song)
-    song = remove_empty_lines(song)
-    song = remove_numbering(song)
-    song = crop_to_expected_lines(song, stanza_count, line_count)
+def clean_couplet(couplet: str) -> List[str]:
+    clean = strip_couplets(couplet)
+    for i, line in enumerate(clean):
+        line = remove_paranthesis(line)
+        line = remove_numbering(line)
+        line = remove_headings(line)
+        clean[i] = line
+
+    return clean
+
+
+def format_song(raw_song: List[str]) -> List[str]:
+    song = []
+
+    for couplet in raw_song:
+        clean = clean_couplet(couplet)
+        song.extend(clean)
+
     return song

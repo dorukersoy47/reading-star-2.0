@@ -13,12 +13,19 @@ def generate_couplet(topic: str, keyword: Optional[str], syllable_count: int, co
         },
         {
             "role": "user",
-            "content": f"Write a 2-line rhyming couplet of a song for children with autism about \"{topic}\". "
-                        + (f"Use the keyword: {keyword}. " if keyword else "")
-                        + f"Each line should have {syllable_count} syllables. "
-                        + f"The language complexity should be {complexity}. "
-                        + f"Output ONLY the couplet of lyrics. No titles, no introduction, no letter labels like (A) or (B), no explanations."
-        },
+            "content": (
+                f"Write a rhyming couplet for autistic children about: \"{topic}\".\n"
+                + (f"Keyword: {keyword} (use exactly once total)\n" if keyword else "")
+                + f"Syllables per line: {syllable_count}\n"
+                + f"Complexity: {complexity}\n\n"
+                + "Rules:\n"
+                + "- Exactly 2 lines only\n"
+                + "- Last words must rhyme\n"
+                + "- Simple concrete words, calming and positive\n"
+                + "- No quotes, no extra lines\n"
+                + "Output exactly:\n<couplet>\nLINE1\nLINE2\n</couplet>"
+            )
+        }
     ]
 
     return generate_text(chat)
@@ -54,7 +61,7 @@ def generate_title(topic: str) -> str:
     ]
 
     title = generate_text(chat, max_tokens=TITLE_MAX_TOKENS)
-    title = re.sub(r'[^\w\s]', '', title).strip()
+    title = re.sub(r'[^\w\s]', '', title).strip().title()
     return title
 
 def generate_instrumental_title(genre: str, keywords: str) -> str:
@@ -72,5 +79,5 @@ def generate_instrumental_title(genre: str, keywords: str) -> str:
     ]
 
     title = generate_text(chat, max_tokens=TITLE_MAX_TOKENS)
-    title = re.sub(r'[^\w\s]', '', title).strip()
+    title = re.sub(r'[^\w\s]', '', title).strip().title()
     return title

@@ -7,9 +7,10 @@ class InstrumentalPrompt(BaseModel):
 
 class LyricsPrompt(BaseModel):
     topic: str
-    stanza_count: int
-    syllable_count: int
-
+    keywords: str # separated by comma
+    line_length: str # short (6) | medium (8) | long (10)
+    song_length: str # short (2*2) | medium (4*2) | long (6*2)
+    complexity: str # simple | moderate | complex
 
 class GeneratedInstrumental(BaseModel):
     title: str
