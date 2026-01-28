@@ -4,8 +4,10 @@ from models.generation import GeneratedInstrumental, GeneratedLyrics
 from datetime import datetime
 from pathlib import Path
 import json
+from os import environ
 
-SONG_DIR = Path(__file__).parent.parent.resolve() / "songs"
+APP_NAME = "ReadingStar"
+SONG_DIR = Path(environ['APPDATA']) / APP_NAME
 
 "GET"
 # retrieve information of every instrumental and their lyric sets
@@ -38,6 +40,7 @@ def getAllInstrumentalsAndSets() -> list[InstrumentalInformation]:
     
     return results
 
+# retrieve information of all lyric sets of an instrumental
 def getLyricSets(inst_id: str) -> list[LyricSetInformation]:
     lyrics_dir = _getLyricsDir(inst_id)
 
@@ -55,7 +58,6 @@ def getLyricSets(inst_id: str) -> list[LyricSetInformation]:
             )
     
     return set_summaries
-
 
 # retrieve an instrumental from its ID
 def getInstrumental(inst_id: str) -> Instrumental:
