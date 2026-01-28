@@ -8,7 +8,7 @@ export function Render() {
   el.className = "create-instrumental-page";
   
   el.innerHTML = `
-    <form>
+    <div class="creation-form">
       <div class="prompt-text">
         <textarea id="prompt" class="prompt-box" name="prompt" placeholder="Give keywords to describe the mood..."></textarea>
       </div>
@@ -30,7 +30,7 @@ export function Render() {
         </div>
       </div>
       <button type="button" class="button" id="generate">Generate</button>
-    </form>
+    </div>
   `;
 
   el.querySelector("#generate").onclick = async () => {
