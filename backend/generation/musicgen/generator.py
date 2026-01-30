@@ -13,7 +13,6 @@ from models.generation import InstrumentalPrompt
 # Path to the locally downloaded model
 LOCAL_MODEL_PATH = Path(__file__).parent.parent / "ai_models" / "music_model"
 
-print("Initializing AI Model...")
 processor = AutoProcessor.from_pretrained(LOCAL_MODEL_PATH)
 model = MusicgenForConditionalGeneration.from_pretrained(LOCAL_MODEL_PATH)
 
@@ -23,7 +22,9 @@ def generate_music(prompt: InstrumentalPrompt, output_folder: Path = None):
         raise ValueError(f"Genre must be one of: {list(GENRES.keys())}")
 
     config = GENRES[prompt.genre]
-    text = f"{config["prompt"]}. It should be {prompt.keywords}."
+    bpm = prompt.bpm if prompt.bpm else config["bpm"]
+    keywords = f" It should be {prompt.keywords}." if prompt.keywords else ""
+    text = f"{config["prompt"]}, {bpm} BPM.{keywords}"
     print(f"\nGenerating {prompt.genre.replace('_', ' ')}...")
     print(f"Prompt: {text}")
     print("Generating base audio... (this will take a few minutes)\n")
