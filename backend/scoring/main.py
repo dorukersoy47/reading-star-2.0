@@ -1,4 +1,4 @@
-from backend.scoring.sr import get_recognized_words
+from backend.scoring.scoreWords import get_recognized_words
 
 def scoring_system(lyrics, duration=10):
     print(f"Listening for {duration} seconds...")
