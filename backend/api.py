@@ -2,9 +2,11 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 from models.generation import InstrumentalPrompt, LyricsPrompt
 from models.songs import Instrumental, InstrumentalInformation, LyricSet, LyricSetInformation
+from models.rhythm import LyricRhythm
 from typing import List
 from services.music_generation import generateMusic
 from services.lyric_generation import generateLyrics
+from services.lyricRhythm import get_syllable_timings
 import services.song_storage as storage
 
 router = APIRouter()
@@ -39,6 +41,13 @@ def getInstrumentalAudio(inst_id: str):
         raise HTTPException(status_code=404, detail="audio not found")
     
     return FileResponse(audio_path, media_type="audio/wav", filename="instrumental.wav")
+
+# get an instrumental's audio as a file response from its ID
+@router.get("/{inst_id}/lyrics/{set_id}/rhythm", response_model=LyricRhythm)
+def get(inst_id: str, set_id: str):
+    lyrics = storage.getLyricSet(inst_id, set_id).lyrics
+    bpm = storage.getInstrumental(inst_id).prompt.bpm
+    return get_syllable_timings(lyrics, bpm)
 
 
 "POST"
