@@ -15,7 +15,7 @@ def generate_couplet(topic: str, keyword: Optional[str], syllable_count: int) ->
             "role": "user",
             "content": (
                 f"Write a rhyming two lines for young children about: \"{topic}\".\n"
-                + (f"Keyword: {keyword} (use exactly once total)\n" if keyword else "")
+                + (f"Use keyword \"{keyword}\" use exactly\n" if keyword else "")
                 + f"Syllables per line: {syllable_count}\n"
                 + "Use extremely simple words and structure.\n"
                 + "Output exactly:\n<couplet>\nLINE1\nLINE2\n</couplet>"

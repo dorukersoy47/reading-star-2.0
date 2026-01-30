@@ -31,7 +31,7 @@ if __name__ == '__main__':
     p = LyricsPrompt(
         topic="love",
         keywords="heart,forever,dreams",
-        line_length="short",
+        line_length="long",
         song_length="short"
     )
 
