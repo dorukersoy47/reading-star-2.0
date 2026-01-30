@@ -17,12 +17,7 @@ def generate_couplet(topic: str, keyword: Optional[str], syllable_count: int, co
                 f"Write a rhyming couplet for autistic children about: \"{topic}\".\n"
                 + (f"Keyword: {keyword} (use exactly once total)\n" if keyword else "")
                 + f"Syllables per line: {syllable_count}\n"
-                + f"Complexity: {complexity}\n\n"
-                + "Rules:\n"
-                + "- Exactly 2 lines only\n"
-                + "- Last words must rhyme\n"
-                + "- Simple concrete words, calming and positive\n"
-                + "- No quotes, no extra lines\n"
+                + "Simple concrete words, calming and positive\n"
                 + "Output exactly:\n<couplet>\nLINE1\nLINE2\n</couplet>"
             )
         }

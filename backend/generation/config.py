@@ -1,6 +1,6 @@
 # Lyric generation
 LYRIC_MODEL_PATH = "ibm-granite/granite-3.0-2b-instruct"
-LYRIC_MAX_TOKENS = 65
+LYRIC_MAX_TOKENS = 50
 TITLE_MAX_TOKENS = 10
 TEMPERATURE = 0.7
 TOP_P = 0.9
@@ -56,13 +56,6 @@ GENRES = {
         "prompt": """punk rock with fast distorted power chords, aggressive drums, 
                     driving bass, raw energy, rebellious attitude""",
         "bpm": 180,
-        "max_tokens": MUSIC_MAX_TOKENS,
-        "target_duration": TARGET_DURATION
-    },
-    "metal": {
-        "prompt": """heavy metal with distorted guitars, palm-muted riffs, double bass drums, 
-                    aggressive power chords, intense energy""",
-        "bpm": 140,
         "max_tokens": MUSIC_MAX_TOKENS,
         "target_duration": TARGET_DURATION
     },

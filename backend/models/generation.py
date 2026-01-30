@@ -3,12 +3,13 @@ from typing import List, Optional
 
 class InstrumentalPrompt(BaseModel):
     genre: str
+    bpm: int
     keywords: str
 
 class LyricsPrompt(BaseModel):
     topic: str
     keywords: Optional[str] # separated by comma
-    line_length: str # short (6) | medium (8) | long (10)
+    line_length: str # short (4) | medium (6) | long (8)
     song_length: str # short (2*2) | medium (4*2) | long (6*2)
     complexity: str # simple | moderate | complex
 

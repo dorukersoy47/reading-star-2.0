@@ -6,7 +6,7 @@ from models.generation import LyricsPrompt, GeneratedLyrics
 def main(prompt : LyricsPrompt) -> GeneratedLyrics:
     topic = prompt.topic
     keywords = prompt.keywords.split(",") if prompt.keywords else None
-    syllable_count = {"short": 6, "medium": 8, "long": 10}[prompt.line_length]
+    syllable_count = {"short": 4, "medium": 6, "long": 8}[prompt.line_length]
     couplet_count = {"short": 2, "medium": 4, "long": 6}[prompt.song_length]
     complexity = prompt.complexity
 
