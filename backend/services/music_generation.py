@@ -9,5 +9,4 @@ def generateMusic(prompt : InstrumentalPrompt, path: Path) -> GeneratedInstrumen
     return GeneratedInstrumental(
         title=title,
         prompt=prompt,
-        bpm = prompt.bpm
     )
