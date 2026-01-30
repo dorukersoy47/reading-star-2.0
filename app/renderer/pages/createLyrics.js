@@ -28,14 +28,6 @@ export function Render(data) {
             <option value="long">Long</option>
           </select>
         </div>
-        <div class="creation-setting">
-          <label for="complexity">Complexity</label>
-          <select id="complexity">
-            <option value="simple">Simple</option>
-            <option value="moderate">Moderate</option>
-            <option value="complex">Complex</option>
-          </select>
-        </div>
       </div>
       <button type="button" class="button" id="generate">Generate</button>
     </div>
@@ -46,7 +38,6 @@ export function Render(data) {
     const keywords = document.getElementById("keywords").value;
     const song_length = document.getElementById("song-length").value;
     const line_length = document.getElementById("line-length").value;
-    const complexity = document.getElementById("complexity").value;
 
     // const keywordPattern = /^[a-zA-Z]*(\s*,\s*[a-zA-Z]+)*$/;
     // if (keywords && !keywordPattern.test(keywords)) {
@@ -57,7 +48,7 @@ export function Render(data) {
 
     try {
       showLoadingScreen();
-      const result = await window.backendAPI.createLyricSet(data.instId, topic, keywords, song_length, line_length, complexity);
+      const result = await window.backendAPI.createLyricSet(data.instId, topic, keywords, song_length, line_length);
       navigateTo({ page: "lyricSet", pushHistory: false, data: { instId: data.instId, setId: result.id }, title: result.title });
     } catch (error) {
       console.error("Error generating lyrics:", error);
