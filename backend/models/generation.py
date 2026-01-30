@@ -9,7 +9,7 @@ class InstrumentalPrompt(BaseModel):
 class LyricsPrompt(BaseModel):
     topic: str
     keywords: Optional[str] # separated by comma
-    line_length: str # short (4) | medium (6) | long (8)
+    line_length: str # short (6) | medium (7) | long (8)
     song_length: str # short (2*2) | medium (4*2) | long (6*2)
 
 class GeneratedInstrumental(BaseModel):

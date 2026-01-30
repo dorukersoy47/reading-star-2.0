@@ -17,7 +17,6 @@ def main(prompt : LyricsPrompt) -> GeneratedLyrics:
     song = format_song(song)
     print("Normalising lyrics...")
     song = normalise_song(song, syllable_count)
-    print(song)
     
     print("Successfully generated lyrics.")
     
@@ -26,13 +25,3 @@ def main(prompt : LyricsPrompt) -> GeneratedLyrics:
         prompt=prompt,
         lyrics=song
     )
-
-if __name__ == '__main__':
-    p = LyricsPrompt(
-        topic="love",
-        keywords="heart,forever,dreams",
-        line_length="long",
-        song_length="short"
-    )
-
-    main(p)
