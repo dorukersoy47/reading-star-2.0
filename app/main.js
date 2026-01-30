@@ -41,6 +41,14 @@ ipcMain.handle('getLyricSet', async (_, { instId, setId }) => {
     return await response.json();
 });
 
+// get a lyric rhythm from the set's ID and its instrumental's ID
+ipcMain.handle('getLyricRhythm', async (_, { instId, setId }) => {
+    const response = await fetch(`${API_BASE_URL}/${instId}/lyrics/${setId}/rhythm`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return await response.json();
+});
 
 /* POST */
 // create a new instrumental

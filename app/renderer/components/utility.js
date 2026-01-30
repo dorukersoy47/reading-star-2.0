@@ -5,3 +5,14 @@ export function formatDate(dateString) {
   const year = date.getFullYear();
   return `${day}.${month}.${year}`;
 };
+
+export function lineFormat(str) {
+  return String(str).replace(/~/g, "");
+}
+
+export function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+}

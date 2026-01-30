@@ -2,6 +2,7 @@ import { goBack, navigateTo } from "../router.js";
 import { formatDate } from "../components/utility.js"
 import { getIcon } from "../components/loadIcons.js";
 import { confirm } from "../components/confirm.js";
+import { lineFormat, escapeHtml } from "../components/utility.js";
 
 export let title = "Lyric Set Page";
 
@@ -43,6 +44,8 @@ export function Render(data) {
       await window.backendAPI.deleteLyricSet(data.instId, data.setId);
       goBack();
     };
+
+    el.querySelector("#play").onclick = () => navigateTo({ page:"playSong", data: { instId: data.instId, setId: data.setId }, title: setData.title });
   });
 
   window.backendAPI.getInstrumental(data.instId).then((instData) => {
@@ -62,16 +65,4 @@ function formatLyrics(container, lyrics) {
     p.textContent = lineFormat(escapeHtml(lineText));
     container.appendChild(p);
   }
-}
-
-function lineFormat(str) {
-  return String(str).replace(/~/g, "");
-}
-
-// utility function to escape HTML
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
 }

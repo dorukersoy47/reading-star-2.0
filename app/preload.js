@@ -21,6 +21,7 @@ contextBridge.exposeInMainWorld('backendAPI', {
   getInstrumental: (instId) => ipcRenderer.invoke('getInstrumental', instId),
   getLyricSets: (instId) => ipcRenderer.invoke('getLyricSets', instId),
   getLyricSet: (instId, setId) => ipcRenderer.invoke('getLyricSet', { instId, setId }),
+  getLyricRhythm: (instId, setId) => ipcRenderer.invoke('getLyricRhythm', { instId, setId }),
   createInstrumental: (genre, keywords) => ipcRenderer.invoke('createInstrumental', { genre, keywords }),
   createLyricSet: (instId, topic, keywords, song_length, line_length) => ipcRenderer.invoke('createLyricSet', { instId, topic, keywords, song_length, line_length }),
   deleteInstrumental: (instId) => ipcRenderer.invoke('deleteInstrumental', instId),

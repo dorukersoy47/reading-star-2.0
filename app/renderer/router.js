@@ -6,6 +6,7 @@ import * as MySongsPage from "./pages/mySongs.js";
 import * as LyricSetPage from "./pages/lyricSet.js";
 import * as InstrumentalPage from "./pages/instrumental.js";
 import * as SettingsPage from "./pages/settings.js";
+import * as PlaySongPage from "./pages/playSong.js";
 
 const routes = {
   home: HomePage,
@@ -14,7 +15,8 @@ const routes = {
   mySongs: MySongsPage,
   lyricSet: LyricSetPage,
   instrumental: InstrumentalPage,
-  settings: SettingsPage
+  settings: SettingsPage,
+  playSong: PlaySongPage
 };
 
 const historyStack = [];
