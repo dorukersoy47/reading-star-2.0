@@ -10,3 +10,5 @@ pyphen
 syllapy
 nltk
 numpy
+speech_recognition
+sounddevice
