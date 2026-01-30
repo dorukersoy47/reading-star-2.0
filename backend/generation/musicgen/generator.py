@@ -23,7 +23,7 @@ def generate_music(prompt: InstrumentalPrompt, output_folder: Path = None):
 
     config = GENRES[prompt.genre]
     bpm = prompt.bpm if prompt.bpm else config["bpm"]
-    text = f"{config["prompt"]}, {bpm}. It should be {prompt.keywords}."
+    text = f"{config["prompt"]}, {bpm} BPM. It should be {prompt.keywords}."
     print(f"\nGenerating {prompt.genre.replace('_', ' ')}...")
     print(f"Prompt: {text}")
     print("Generating base audio... (this will take a few minutes)\n")

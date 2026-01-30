@@ -11,11 +11,11 @@ class LyricsPrompt(BaseModel):
     keywords: Optional[str] # separated by comma
     line_length: str # short (4) | medium (6) | long (8)
     song_length: str # short (2*2) | medium (4*2) | long (6*2)
-    complexity: str # simple | moderate | complex
 
 class GeneratedInstrumental(BaseModel):
     title: str
     prompt: InstrumentalPrompt
+    bpm: int
 
 class GeneratedLyrics(BaseModel):
     title: str

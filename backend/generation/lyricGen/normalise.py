@@ -7,7 +7,7 @@ FILLER_WORDS = ["Oh", "Ah", "Hey", "Yeah", "Ooh", "Hmm", "Whoa", "Yay", "Woo"]
 def split_word(word: str) -> List[str]:
     hyphenator = pyphen.Pyphen(lang='en_GB')
 
-    clean = ''.join(c for c in word.lower() if c.isalpha())
+    clean = ''.join(c for c in word.lower() if c.isalpha() or c == "'")
 
     if not clean:
         return []

@@ -6,14 +6,13 @@ from models.generation import LyricsPrompt, GeneratedLyrics
 def main(prompt : LyricsPrompt) -> GeneratedLyrics:
     topic = prompt.topic
     keywords = prompt.keywords.split(",") if prompt.keywords else None
-    syllable_count = {"short": 4, "medium": 6, "long": 8}[prompt.line_length]
+    syllable_count = {"short": 6, "medium": 7, "long": 8}[prompt.line_length]
     couplet_count = {"short": 2, "medium": 4, "long": 6}[prompt.song_length]
-    complexity = prompt.complexity
 
     print("Generating title...")
     title = generate_title(topic)
     print("Generating lyrics...")
-    song = generate_song(topic, keywords, syllable_count, couplet_count, complexity)
+    song = generate_song(topic, keywords, syllable_count, couplet_count)
     print("Formatting lyrics...")
     song = format_song(song)
     print("Normalising lyrics...")
@@ -21,9 +20,19 @@ def main(prompt : LyricsPrompt) -> GeneratedLyrics:
     print(song)
     
     print("Successfully generated lyrics.")
-
+    
     return GeneratedLyrics(
         title=title,
         prompt=prompt,
         lyrics=song
     )
+
+if __name__ == '__main__':
+    p = LyricsPrompt(
+        topic="love",
+        keywords="heart,forever,dreams",
+        line_length="short",
+        song_length="short"
+    )
+
+    main(p)

@@ -8,5 +8,6 @@ def generateMusic(prompt : InstrumentalPrompt, path: Path) -> GeneratedInstrumen
     title = generate_instrumental_title(prompt.genre, prompt.keywords)
     return GeneratedInstrumental(
         title=title,
-        prompt=prompt
+        prompt=prompt,
+        bpm = prompt.bpm
     )
