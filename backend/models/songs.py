@@ -17,7 +17,6 @@ class Instrumental(BaseModel):
     last_played: datetime
     title: str
     prompt: InstrumentalPrompt
-    bpm: int
     audio_url: str
 
 
