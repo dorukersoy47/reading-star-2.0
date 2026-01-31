@@ -29,6 +29,10 @@ export function Render(data) {
     </div>
   `;
 
+  window.backendAPI.getInstrumental(data.instId).then((instData) => {
+    document.getElementById("instrumental").textContent = `${instData.title}`
+  });
+
   window.backendAPI.getLyricSet(data.instId, data.setId).then((setData) => {
     formatLyrics(document.getElementById("lyrics"), setData.lyrics);
     document.getElementById("created").textContent = `Created: ${formatDate(setData.created_at)}`
@@ -46,10 +50,6 @@ export function Render(data) {
     };
 
     el.querySelector("#play").onclick = () => navigateTo({ page:"playSong", data: { instId: data.instId, setId: data.setId }, title: setData.title });
-  });
-
-  window.backendAPI.getInstrumental(data.instId).then((instData) => {
-    document.getElementById("instrumental").textContent = `${instData.title}`
   });
 
   return el;

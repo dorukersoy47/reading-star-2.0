@@ -21,13 +21,13 @@ def generate_syllable_timings(song_lines, bpm):
     
     Returns:
         Tuple: (initial_delay, on_beat_timings, polyrhythm_timings, final_delay, total_song_length)
-        - initial_delay: float (seconds) - 1 bar count-in before all lyrics
+        - initial_delay: float (milliseconds) - 1 bar count-in before all lyrics
         - on_beat_timings: 2D array [[delays per line]] - on-beat delays for each line
         - polyrhythm_timings: 2D array [[delays per line]] - polyrhythm delays for each line
-        - final_delay: float (seconds) - 1 bar count-out after all lyrics
-        - total_song_length: float (seconds) - total time including count in/out
+        - final_delay: float (milliseconds) - 1 bar count-out after all lyrics
+        - total_song_length: float (milliseconds) - total time including count in/out
     """
-    beat_duration = 60.0 / bpm  
+    beat_duration = 60000 / bpm  
     count_bar_duration = 4 * beat_duration  # 1 bar = 4 beats
     
     on_beat_timings = []

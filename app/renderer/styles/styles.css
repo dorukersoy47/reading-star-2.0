@@ -433,3 +433,18 @@ body {
 .delete-button svg {
   width: 4.5rem;
 }
+
+.song-lyrics {
+  margin-top: 5rem;
+}
+
+.primary-line {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.secondary-line {
+  min-height: 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
