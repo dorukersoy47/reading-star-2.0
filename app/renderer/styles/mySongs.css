@@ -49,7 +49,7 @@
 
 .inst-btn-title {
   font-size: 1.8rem;
-  font-weight: bold;
+  font-weight: 500;
   color: var(--button-text);
   text-align: left;
   margin-right: 1rem;
@@ -116,7 +116,7 @@
 .lyric-btn-title {
   text-align: left;
   font-size: 1.6rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--text);
   margin-right: 1rem;
 }
